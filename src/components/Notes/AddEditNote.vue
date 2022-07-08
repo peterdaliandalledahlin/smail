@@ -458,14 +458,14 @@ label > div {
 }
 label > div > div {
     font-size: 2rem;
-    height: 2.8rem;
+    /* height: 2.8rem; */
 }
 input[type='radio'] {
     display: none;
 }
 input[type='radio']:not(:checked)+div {
     filter: grayscale(100%);
-    /* border: 2px solid transparent; */
+    border: 2px solid transparent;
 }
 input[type='radio']:checked+div {
     border: 2px solid green;
