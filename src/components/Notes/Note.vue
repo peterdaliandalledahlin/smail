@@ -3,17 +3,17 @@
         <div class="card-content">
             <div class="content">
                 <p>Tror du att du kan klara av att arbeta?</p>
-                <p>{{ beliefInWorkFormatted }}</p> 
+                <p>{{ props.note.beliefInWork }}</p> 
                 <p>Tror du att dina kompetenser är till nytta på en arbetsplats?</p>
-                <p>{{ laborMarketFormatted }}</p>
+                <p>{{ props.note.laborMarket }}</p>
                 <p>Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?</p>
-                <p>{{ purposeFulnessFormatted }}</p>
+                <p>{{ props.note.purposeFulness }}</p>
                 <p>Hur bra är du på att samarbeta med andra?</p>
-                <p>{{ abilityToWorkTogetherFormatted }}</p>
+                <p>{{ props.note.abilityToWorkTogether }}</p>
                 <p>Har du tid i vardagen at fokusera på att få ett arbete/praktik eller utbildning?</p>
-                <p>{{ handlingOfEverydayLifeFormatted }}</p>
+                <p>{{ props.note.handlingOfEverydayLife }}</p>
                 <p>Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?</p>
-                <p>{{ stateOfHealthFormatted }}</p>
+                <p>{{ props.note.stateOfHealth }}</p>
                 <h4>Hur söker du ett arbete?</h4>
                 <p class="m-0">Genom annonser i tidningar, tidskrifter och liknande</p>
                 <span class="tag" :class="adverts === 'Ja' ? 'is-success' : 'is-danger'">{{ adverts }}</span>
@@ -39,6 +39,7 @@
             </div>
         </div>
         <ViewChart :note="note" />
+        <LineChart :note="note" />
         <footer class="card-footer">
             <router-link :to="`/edit-note/${note.id}`" href="#" class="card-footer-item">Edit</router-link>
             <a @click.prevent="modals.deleteNote = true" href="#" class="card-footer-item">Delete</a>
@@ -54,6 +55,7 @@
     import { useDateFormat } from '@vueuse/core'
     import Chart from 'chart.js/auto'
     import ViewChart from '../../views/ViewChart.vue'
+    import LineChart from '../../views/LineChart.vue'
 
 //PROPS
     const props = defineProps({
@@ -75,8 +77,7 @@
         return formattedDate.value
     })
 
-//BELIEFE IN WORK FORMATTED
-
+//TRANSLATE NUMBER TO SMILEY
     const beliefInWorkFormatted = computed(() => {
         //☹️
 

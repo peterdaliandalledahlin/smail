@@ -1,5 +1,6 @@
 <template>
  <Radar />
+ <button @click="changeChart">LITE TEXT</button>
 </template>
 
 <script>
@@ -121,6 +122,11 @@ export default defineComponent({
           }
         }
       
+    }
+
+    const changeChart = () => {
+      ChartJS.config.type = "bar";
+ChartJS.update();
     }
 
     return () =>

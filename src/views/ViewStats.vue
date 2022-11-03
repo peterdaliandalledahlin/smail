@@ -3,22 +3,17 @@
     <table class="table is-fullwidth">
       <thead>
         <tr>
-          <th>Stat</th>
-          <th>Value</th>
+          <th>Statistik</th>
+          <th>Antal</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Number of Notes</td>
-          <td>{{ storeNotes.totalNotesCount }}</td>
-        </tr>
-        <tr>
-          <td>Number of Characters (of all notes)</td>
-          <td>{{ storeNotes.totalCharactersCount }}</td>
+          <td>Hur många skattningar?</td>
+          <td>3</td>
         </tr>
       </tbody>
     </table>
-    <input v-model="loveNoteballs" v-autofocus maxlength="50" class="input" type="text" placeholder="Do you love Noteballz?" />
   </div>
 </template>
 

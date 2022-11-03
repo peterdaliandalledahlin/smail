@@ -22,5 +22,4 @@
 
 <style>
 @import 'bulma/css/bulma.min.css';
-@import 'bulma-slider/dist/css/bulma-slider.min.css';
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div class="notes">
 
-      <AddEditNote :note="newNote" placeholder="Add a new note" ref="addEditNoteRef">
-        <template #buttons>
-          <button @click="addNote" class="button is-link has-background-success">Lägg till ny skattning</button>
+      <!-- <AddEditNote :note="newNote" placeholder="Add a new note" ref="addEditNoteRef"> -->
+      <AddEditNote :note="newNote" ref="addEditNoteRef">
+        <template #default="scope">
+          <button :disabled="!scope.formValidated" @click="addNote" class="button is-link has-background-success" v-text="!scope.formValidated ? 'För att spara måste du skatta dig på alla områden' : 'Lägg till ny skattning'"></button>
       </template>
       </AddEditNote>
 
@@ -46,12 +47,12 @@
 
     storeNotes.addNote(newNote)
   
-    newNote.beliefInWork = 3
-    newNote.laborMarket = 3
-    newNote.purposeFulness = 3
-    newNote.abilityToWorkTogether = 3
-    newNote.handlingOfEverydayLife = 3
-    newNote.stateOfHealth = 3
+    newNote.beliefInWork = null
+    newNote.laborMarket = null
+    newNote.purposeFulness = null
+    newNote.abilityToWorkTogether = null
+    newNote.handlingOfEverydayLife = null
+    newNote.stateOfHealth = null
     newNote.adverts = false
     newNote.jobportal = false
     newNote.employer = false
@@ -64,12 +65,12 @@
   }
 
   const newNote = reactive({
-    beliefInWork: 3,
-    laborMarket: 3,
-    purposeFulness: 3,
-    abilityToWorkTogether: 3,
-    handlingOfEverydayLife: 3,
-    stateOfHealth: 3,
+    beliefInWork: null,
+    laborMarket: null,
+    purposeFulness: null,
+    abilityToWorkTogether: null,
+    handlingOfEverydayLife: null,
+    stateOfHealth: null,
     adverts: false,
     jobportal: false,
     employer: false,

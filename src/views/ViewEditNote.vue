@@ -1,7 +1,7 @@
 <template>
     <div class="edit-note">
         <AddEditNote :note="noteContent" bgColor="link" placeholder="Edit note" label="Edit Note" ref="addEditNoteRef" >
-          <template #buttons>
+          <template #default>
             <button class="button is-link is-light mr-2" @click="$router.back()">Cancel</button>
             <button @click="handleSaveClicked" class="button is-link has-background-link" :disabled="!noteContent">Save note</button>
           </template>
