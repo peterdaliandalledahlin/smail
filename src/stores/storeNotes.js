@@ -1,11 +1,15 @@
 import { defineStore } from 'pinia'
-import { doc, addDoc, collection, onSnapshot, deleteDoc, updateDoc, query, orderBy } from 'firebase/firestore'
+import { doc, addDoc, collection, onSnapshot, deleteDoc, updateDoc, query, orderBy, where, getDocs } from 'firebase/firestore'
 import { db } from '../js/firebase'
 import { useStoreAuth } from './storeAuth'
 
 //const notesCollectionRef = collection(db, 'notes')
 let notesCollectionRef
+let clientsCollectionRef
+let clientCollectionRef
+let estimatesCollectionRef
 let notesCollectionQuery
+let notesCollectionQueryData
 
 let getNotesSnapshot = null
 
@@ -14,18 +18,21 @@ export const useStoreNotes = defineStore('storeNotes', {
   state: () => {
     return {
       notes: [],
+      clients: [],
       notesLoaded: true,
+      clientsLoaded: true,
+      answers: [],
       estimatesDefault: [
         {
             title: 'Individens tro på att få ett arbete',
             subtitle: 'Tror du att du kan klara av att arbeta?',
             propertyName: 'beliefInWork',
             options: [
-                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta'},
-                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta'},
-                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta'},
-                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta'},
-                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta'},
+                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta', audio: '/sv/likeitloud.mp3'},
+                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta', audio: '/sv/ringside.mp3'},
+                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta', audio: '/sv/slippingaway.mp3'},
+                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta', audio: '/sv/snowprincess.mp3'},
+                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta', audio: '/sv/soulicious.mp3'},
             ]
         },
         {
@@ -95,11 +102,11 @@ export const useStoreNotes = defineStore('storeNotes', {
             subtitle: 'Tror du att du kan klara av att arbeta?',
             propertyName: 'beliefInWork',
             options: [
-                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta'},
-                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta'},
-                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta'},
-                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta'},
-                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta'},
+                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta', audio: '/sv/likeitloud.mp3'},
+                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta', audio: '/sv/ringside.mp3'},
+                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta', audio: '/sv/slippingaway.mp3'},
+                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta', audio: '/sv/snowprincess.mp3'},
+                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta', audio: '/sv/soulicious.mp3'},
             ]
         },
         {
@@ -243,11 +250,11 @@ export const useStoreNotes = defineStore('storeNotes', {
             subtitle: 'هل تعتقد أنه يمكنك إدارة العمل؟',
             propertyName: 'beliefInWork',
             options: [
-                {value: 1, description: 'لا أعتقد أنني أستطيع العمل'},
-                {value: 2, description: 'أنا غير متأكد مما إذا كان بإمكاني إدارة العمل'},
-                {value: 3, description: 'لست متأكدًا مما إذا كان بإمكاني العمل'},
-                {value: 4, description: 'أنا متأكد بشكل معقول من أنني أستطيع العمل'},
-                {value: 5, description: 'أنا متأكد من أنني أستطيع العمل'},
+                {value: 1, description: 'لا أعتقد أنني أستطيع العمل', audio: '/ar/asyouwere.mp3'},
+                {value: 2, description: 'أنا غير متأكد مما إذا كان بإمكاني إدارة العمل', audio: '/ar/dyalla.mp3'},
+                {value: 3, description: 'لست متأكدًا مما إذا كان بإمكاني العمل', audio: '/ar/goldencage.mp3'},
+                {value: 4, description: 'أنا متأكد بشكل معقول من أنني أستطيع العمل', audio: '/ar/guitarhouse.mp3'},
+                {value: 5, description: 'أنا متأكد من أنني أستطيع العمل', audio: '/ar/indecision.mp3'},
             ]
         },
         {
@@ -391,8 +398,14 @@ export const useStoreNotes = defineStore('storeNotes', {
     init() {
       const storeAuth = useStoreAuth() 
       notesCollectionRef = collection(db, 'users', storeAuth.user.id, 'notes')
+      estimatesCollectionRef = collection(db, 'users', storeAuth.user.id, 'estimates')
+      clientsCollectionRef = collection(db, 'users', storeAuth.user.id, 'clients')
+      clientCollectionRef = collection(db, 'users', storeAuth.user.id, 'clients')
       notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
+      notesCollectionQueryData = query(notesCollectionRef, where('email', '==', 'roger.moore@enkoping.se'))
+      //const estimatesRef = db.collection('users').doc(storeAuth.user.id).collection('clients').doc(client.id).collection('estimates')
       this.getNotes()
+      this.getClients()
     },
     async getNotes() {
       this.notesLoaded = false
@@ -402,6 +415,10 @@ export const useStoreNotes = defineStore('storeNotes', {
             let note = {
               id: doc.id,
               date: doc.data().date,
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
+              email: doc.data().email,
+              annotation: doc.data().annotation,
               beliefInWork: doc.data().beliefInWork,
               laborMarket: doc.data().laborMarket,
               purposeFulness: doc.data().purposeFulness,
@@ -421,22 +438,156 @@ export const useStoreNotes = defineStore('storeNotes', {
             notes.push(note)
           })
             this.notes = notes
+            console.log(this.notes)
             this.notesLoaded = true
-            //console.log(this.notes)
       }, error => {
         console.log(error.message)
       })
     },
+    async getClients() {
+        this.clientsLoaded = false
+        getNotesSnapshot = onSnapshot(clientsCollectionRef, (querySnapshot) => {
+            let clients = []
+            querySnapshot.forEach((doc) => {
+              let client = {
+                id: doc.id,
+                date: doc.data().date,
+                firstName: doc.data().firstName,
+                birthYear: doc.data().birthYear,
+                email: doc.data().email,
+                annotation: doc.data().annotation
+              }
+              clients.push(client)
+            })
+              this.clients = clients
+              console.log(this.clients)
+              this.clientsLoaded = true
+        }, error => {
+          console.log(error.message)
+        })
+    },
+    async getClient(clientId) {
+        this.clientsLoaded = false
+        getNotesSnapshot = onSnapshot(clientCollectionRef, (querySnapshot) => {
+            let client = []
+            querySnapshot.forEach((doc) => {
+              let client = {
+                id: doc.id,
+                date: doc.data().date,
+                firstName: doc.data().firstName,
+                birthYear: doc.data().birthYear,
+                email: doc.data().email,
+                annotation: doc.data().annotation
+              }
+              clients.push(client)
+            })
+              this.client = client
+              console.log(this.client)
+              this.clientsLoaded = true
+        }, error => {
+          console.log(error.message)
+        })
+    },
+    // async getUserData() {
+    //     this.notesLoaded = false
+    //     getNotesSnapshot = onSnapshot(notesCollectionQueryData, (querySnapshot) => {
+    //         let answers = []
+    //         querySnapshot.forEach((doc) => {
+    //           let answer = {
+    //             id: doc.id,
+    //             date: doc.data().date,
+    //             firstName: doc.data().firstName,
+    //             lastName: doc.data().lastName,
+    //             email: doc.data().email,
+    //             annotation: doc.data().annotation,
+    //             beliefInWork: doc.data().beliefInWork,
+    //             laborMarket: doc.data().laborMarket,
+    //             purposeFulness: doc.data().purposeFulness,
+    //             abilityToWorkTogether: doc.data().abilityToWorkTogether,
+    //             handlingOfEverydayLife: doc.data().handlingOfEverydayLife,
+    //             stateOfHealth: doc.data().stateOfHealth,
+    //             adverts: doc.data().adverts,
+    //             jobportal: doc.data().jobportal,
+    //             employer: doc.data().employer,
+    //             family: doc.data().family,
+    //             internship: doc.data().internship,
+    //             staffingcompanies: doc.data().staffingcompanies,
+    //             socialmedia: doc.data().socialmedia,
+    //             notlookingforwork: doc.data().notlookingforwork,
+    //             otherways: doc.data().otherways,
+    //           }
+    //           answers.push(answer)
+    //         })
+    //           this.answers = answers
+    //           console.log(this.answers)
+    //           this.notesLoaded = true
+    //     }, error => {
+    //       console.log(error.message)
+    //     })
+    // },
     clearNotes() {
       this.notes = []
       if(getNotesSnapshot) getNotesSnapshot() //unsubscribe from any active listener 
     },
+    clearClients() {
+        this.clients = []
+        if(getClientsSnapshot) getClientsSnapshot() //unsubscribe from any active listener 
+    },
+    async addClient(newClientContent) {
+ 
+        let currentDate = new Date().getTime(),
+        date = currentDate.toString()
+        
+  
+        await addDoc(clientsCollectionRef, {
+          firstName: newClientContent.firstName,
+          birthYear: newClientContent.birthYear,
+          email: newClientContent.email,
+          annotation: newClientContent.annotation,
+          date
+        })
+  
+    },
+
+    // async addEstimate(newNoteContent) {
+    // const storeAuth = useStoreAuth()
+    // let currentDate = new Date().getTime(),
+    // date = currentDate.toString()
+    
+
+    // await addDoc(estimatesCollectionRef, {
+    //     id: storeAuth.user.id,
+    //     beliefInWork: parseInt(newNoteContent.beliefInWork),
+    //     laborMarket: parseInt(newNoteContent.laborMarket),
+    //     purposeFulness: parseInt(newNoteContent.purposeFulness),
+    //     abilityToWorkTogether: parseInt(newNoteContent.abilityToWorkTogether),
+    //     handlingOfEverydayLife: parseInt(newNoteContent.handlingOfEverydayLife),
+    //     stateOfHealth: parseInt(newNoteContent.stateOfHealth),
+    //     adverts: newNoteContent.adverts,
+    //     jobportal: newNoteContent.jobportal,
+    //     employer: newNoteContent.employer,
+    //     family: newNoteContent.family,
+    //     internship: newNoteContent.internship,
+    //     staffingcompanies: newNoteContent.staffingcompanies,
+    //     socialmedia: newNoteContent.socialmedia,
+    //     notlookingforwork: newNoteContent.notlookingforwork,
+    //     otherways: newNoteContent.otherways,
+    //     date
+    // })
+
+    // },  
+    
     async addNote(newNoteContent) {
  
       let currentDate = new Date().getTime(),
       date = currentDate.toString()
+      
 
       await addDoc(notesCollectionRef, {
+        firstName: newNoteContent.firstName,
+        lastName: newNoteContent.lastName,
+        email: newNoteContent.email,
+        annotation: newNoteContent.annotation,
         beliefInWork: parseInt(newNoteContent.beliefInWork),
         laborMarket: parseInt(newNoteContent.laborMarket),
         purposeFulness: parseInt(newNoteContent.purposeFulness),
@@ -459,13 +610,21 @@ export const useStoreNotes = defineStore('storeNotes', {
     async deleteNote(idToDelete) {
       await deleteDoc(doc(notesCollectionRef, idToDelete))
     },
+    async deleteClient(idToDelete) {
+        await deleteDoc(doc(clientsCollectionRef, idToDelete))
+    },
     async updateNote(id, content) {
-      console.log(content)
-
+      //console.log(content)
       await updateDoc(doc(notesCollectionRef, id), 
         content
       )
     },
+    async updateClient(id, content) {
+        //console.log(content)
+        await updateDoc(doc(clientsCollectionRef, id), 
+          content
+        )
+      },
     changeLanguageToArabic() {
       this.estimatesDefault = this.estimatesAR
     },
@@ -485,5 +644,10 @@ export const useStoreNotes = defineStore('storeNotes', {
         return state.notes.filter(note => note.id === id )[0]
       }
     },
+    getClientContent: (state) => {
+        return (id) => {
+          return state.clients.filter(client => client.id === id )[0]
+        }
+      },
   }
 })

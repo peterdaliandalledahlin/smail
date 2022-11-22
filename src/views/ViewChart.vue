@@ -83,28 +83,7 @@ export default defineComponent({
           pointHoverBackgroundColor: '#fff',
           pointHoverBorderColor: 'rgba(179,181,198,1)',
           data: [props.note.beliefInWork, props.note.laborMarket, props.note.purposeFulness, props.note.abilityToWorkTogether, props.note.handlingOfEverydayLife, props.note.stateOfHealth],
-        },
-        {
-          label: useDateFormat(new Date(parseInt(props.note.date)), 'YYYY-MM-DD HH:mm:ss').value,
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [1,3,3,5,5,1],
-        },
-        {
-          label: useDateFormat(new Date(parseInt(props.note.date)), 'YYYY-MM-DD HH:mm:ss').value,
-          backgroundColor: 'rgba(99,255,132,0.2)',
-          borderColor: 'rgba(99,255,132,1)',
-          pointBackgroundColor: 'rgba(179,181,198,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(179,181,198,1)',
-          data: [2,2,4,5,1,3],
-        },
-        
+        }
       ]
     }
 
@@ -122,11 +101,6 @@ export default defineComponent({
           }
         }
       
-    }
-
-    const changeChart = () => {
-      ChartJS.config.type = "bar";
-ChartJS.update();
     }
 
     return () =>

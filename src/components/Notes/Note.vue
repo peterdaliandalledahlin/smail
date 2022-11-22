@@ -2,44 +2,84 @@
   <div class="card mb-4">
         <div class="card-content">
             <div class="content">
-                <p>Tror du att du kan klara av att arbeta?</p>
-                <p>{{ props.note.beliefInWork }}</p> 
-                <p>Tror du att dina kompetenser är till nytta på en arbetsplats?</p>
-                <p>{{ props.note.laborMarket }}</p>
-                <p>Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?</p>
-                <p>{{ props.note.purposeFulness }}</p>
-                <p>Hur bra är du på att samarbeta med andra?</p>
-                <p>{{ props.note.abilityToWorkTogether }}</p>
-                <p>Har du tid i vardagen at fokusera på att få ett arbete/praktik eller utbildning?</p>
-                <p>{{ props.note.handlingOfEverydayLife }}</p>
-                <p>Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?</p>
-                <p>{{ props.note.stateOfHealth }}</p>
-                <h4>Hur söker du ett arbete?</h4>
-                <p class="m-0">Genom annonser i tidningar, tidskrifter och liknande</p>
-                <span class="tag" :class="adverts === 'Ja' ? 'is-success' : 'is-danger'">{{ adverts }}</span>
-                <p class="mt-3 mb-0">Genom jobbportaler via internet</p>
-                <span class="tag" :class="jobportal === 'Ja' ? 'is-success' : 'is-danger'">{{ jobportal }}</span>
-                <p class="mt-3 mb-0">Har kontaktat en arbetsgivare på eget initiativ <small>(ex. ringt, skickat in en spontanansökan eller besökt deras arbetsplats)</small></p>
-                <span class="tag" :class="employer === 'Ja' ? 'is-success' : 'is-danger'">{{ employer }}</span>
-                <p class="mt-3 mb-0">Har frågat min familj, vänner och bekanta om de känner någon som kan hjälpa mig att hitta ett arbete</p>
-                <span class="tag" :class="family === 'Ja' ? 'is-success' : 'is-danger'">{{ family }}</span>
-                <p class="mt-3 mb-0">Har gjort min praktik uppmärksam på att jag gärna vill ha en anställning efter att praktiken är över</p>
-                <span class="tag" :class="internship === 'Ja' ? 'is-success' : 'is-danger'">{{ internship }}</span>
-                <p class="mt-3 mb-0">Bemanningsföretag, rekryteringsbyrå</p>
-                <span class="tag" :class="staffingcompanies === 'Ja' ? 'is-success' : 'is-danger'">{{ staffingcompanies }}</span>
-                <p class="mt-3 mb-0">Social medier, Facebook och LinkedIn t.ex.</p>
-                <span class="tag" :class="socialmedia === 'Ja' ? 'is-success' : 'is-danger'">{{ socialmedia }}</span>
-                <p class="mt-3 mb-0">Jag letar inte efter arbete <small>(eftersom jag är sjuk eller av andra skäl)</small></p>
-                <span class="tag" :class="notlookingforwork === 'Ja' ? 'is-success' : 'is-danger'">{{ notlookingforwork}}</span>
-                <p class="mt-3 mb-0">Annat sätt;</p>
-                <span class="tag is-light">{{ props.note.otherways }}</span>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Skattning gjord</th><td>{{ dateFormatted }}</td>
+                        </tr>
+                        <tr>
+                            <th>Förnamn</th><td>{{ props.note.firstName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Efternamn</th><td>{{ props.note.lastName}}</td>
+                        </tr>
+                        <tr>
+                            <th>E-post</th><td>{{ props.note.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Anteckning</th><td>{{ props.note.annotation }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tror du att du kan klara av att arbeta?</td><td>{{ props.note.beliefInWork }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tror du att dina kompetenser är till nytta på en arbetsplats?</td><td>{{ props.note.laborMarket }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?</td><td>{{ props.note.purposeFulness }}</td>
+                        </tr>
+                        <tr>
+                            <td>Hur bra är du på att samarbeta med andra?</td><td>{{ props.note.abilityToWorkTogether }}</td>
+                        </tr>
+                        <tr>
+                            <td>Har du tid i vardagen at fokusera på att få ett arbete/praktik eller utbildning?</td><td>{{ props.note.handlingOfEverydayLife }}</td>
+                        </tr>
+                        <tr>
+                            <td>Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?</td><td>{{ props.note.stateOfHealth }}</td>
+                        </tr>
+                        <tr>
+                            <th>Hur söker du ett arbete?</th>
+                        </tr>
+                        <tr>
+                            <td>Genom annonser i tidningar, tidskrifter och liknande</td><td><span class="tag" :class="adverts === 'Ja' ? 'is-success' : 'is-danger'">{{ adverts }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Genom jobbportaler via internet</td><td><span class="tag" :class="jobportal === 'Ja' ? 'is-success' : 'is-danger'">{{ jobportal }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har kontaktat en arbetsgivare på eget initiativ <small>(ex. ringt, skickat in en spontanansökan eller besökt deras arbetsplats)</small></td><td><span class="tag" :class="employer === 'Ja' ? 'is-success' : 'is-danger'">{{ employer }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har frågat min familj, vänner och bekanta om de känner någon som kan hjälpa mig att hitta ett arbete</td><td><span class="tag" :class="family === 'Ja' ? 'is-success' : 'is-danger'">{{ family }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har gjort min praktik uppmärksam på att jag gärna vill ha en anställning efter att praktiken är över</td><td><span class="tag" :class="internship === 'Ja' ? 'is-success' : 'is-danger'">{{ internship }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bemanningsföretag, rekryteringsbyrå</td><td><span class="tag" :class="staffingcompanies === 'Ja' ? 'is-success' : 'is-danger'">{{ staffingcompanies }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Social medier, Facebook och LinkedIn t.ex.</td><td><span class="tag" :class="socialmedia === 'Ja' ? 'is-success' : 'is-danger'">{{ socialmedia }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jag letar inte efter arbete <small>(eftersom jag är sjuk eller av andra skäl)</small></td><td><span class="tag" :class="notlookingforwork === 'Ja' ? 'is-success' : 'is-danger'">{{ notlookingforwork}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Annat sätt;</td><td><span class="tag is-light">{{ props.note.otherways }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+        
                 <div class="columns is-mobile has-text-grey-light mt-2">
                     <small class="column">{{ dateFormatted }}</small>
                 </div>
             </div>
         </div>
-        <ViewChart :note="note" />
-        <LineChart :note="note" />
+        <!-- <ViewChart :note="note" /> -->
+        <!-- <LineChart :note="note" /> -->
+        <LineChart />
         <footer class="card-footer">
             <router-link :to="`/edit-note/${note.id}`" href="#" class="card-footer-item">Edit</router-link>
             <a @click.prevent="modals.deleteNote = true" href="#" class="card-footer-item">Delete</a>
@@ -55,7 +95,7 @@
     import { useDateFormat } from '@vueuse/core'
     import Chart from 'chart.js/auto'
     import ViewChart from '../../views/ViewChart.vue'
-    import LineChart from '../../views/LineChart.vue'
+    import LineChart from '../../components/Line.vue'
 
 //PROPS
     const props = defineProps({

@@ -46,7 +46,11 @@
   const addNote = () => {
 
     storeNotes.addNote(newNote)
-  
+    
+    newNote.firstName = ''
+    newNote.lastName = ''
+    newNote.email = ''
+    newNote.annotation= ''
     newNote.beliefInWork = null
     newNote.laborMarket = null
     newNote.purposeFulness = null
@@ -65,6 +69,10 @@
   }
 
   const newNote = reactive({
+    firstName: '',
+    lastName: '',
+    email: '',
+    annotation: '',
     beliefInWork: null,
     laborMarket: null,
     purposeFulness: null,

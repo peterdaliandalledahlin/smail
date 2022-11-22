@@ -1,6 +1,6 @@
 <template>
     <div class="edit-note">
-        <AddEditNote :note="noteContent" bgColor="link" placeholder="Edit note" label="Edit Note" ref="addEditNoteRef" >
+        <AddEditNote :note="noteContent" bgColor="link" label="Edit Note" ref="addEditNoteRef" >
           <template #default>
             <button class="button is-link is-light mr-2" @click="$router.back()">Cancel</button>
             <button @click="handleSaveClicked" class="button is-link has-background-link" :disabled="!noteContent">Save note</button>
@@ -35,7 +35,3 @@ const handleSaveClicked = () => {
 }
 
 </script>
-
-<style>
-
-</style>
