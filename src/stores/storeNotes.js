@@ -438,7 +438,7 @@ export const useStoreNotes = defineStore('storeNotes', {
             notes.push(note)
           })
             this.notes = notes
-            console.log(this.notes)
+            //console.log(this.notes)
             this.notesLoaded = true
       }, error => {
         console.log(error.message)
@@ -460,7 +460,7 @@ export const useStoreNotes = defineStore('storeNotes', {
               clients.push(client)
             })
               this.clients = clients
-              console.log(this.clients)
+              //console.log(this.clients)
               this.clientsLoaded = true
         }, error => {
           console.log(error.message)

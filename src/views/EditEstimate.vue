@@ -17,39 +17,39 @@
           <div class="field">
             <label class="label">Tror du att du kan klara av att arbeta?</label>
             <div class="control">
-              <input v-model="estimate.beliefInWork" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.beliefInWork" class="input" type="number">
             </div>
           </div>
 
           <div class="field">
             <label class="label">Tror du att dina kompetenser är till nytta på en arbetsplats?</label>
             <div class="control">
-              <input v-model="estimate.laborMarket" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.laborMarket" class="input" type="number">
             </div>
           </div>
 
           <div class="field">
             <label class="label">Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?</label>
             <div class="control">
-              <input v-model="estimate.purposeFulness" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.purposeFulness" class="input" type="number">
             </div>
           </div>
           <div class="field">
             <label class="label">Hur bra är du på att arbeta med andra?</label>
             <div class="control">
-              <input v-model="estimate.abilityToWorkTogether" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.abilityToWorkTogether" class="input" type="number">
             </div>
           </div>
           <div class="field">
             <label class="label">Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?</label>
             <div class="control">
-              <input v-model="estimate.handlingOfEverydayLife" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.handlingOfEverydayLife" class="input" type="number">
             </div>
           </div>
           <div class="field">
             <label class="label">Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?</label>
             <div class="control">
-              <input v-model="estimate.stateOfHealth" class="input" type="number">
+              <input @change="validateForm" v-model="estimate.stateOfHealth" class="input" type="number">
             </div>
           </div>
 
@@ -132,7 +132,7 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a @click="updateEstimate" href="#" class="card-footer-item">Save</a>
+      <button :disabled="!formValidated" class="button"><a @click="updateEstimate" href="#" class="card-footer-item">Save</a></button>
         <a @click="router.back()" href="#" class="card-footer-item">Cancel</a>
         <a @click="deleteEstimate" href="#" class="card-footer-item">Delete</a>
       </footer>
@@ -153,7 +153,7 @@ let estimate = ref({})
 let test = route.params.client_id
 console.log(test)
 
-
+//HANDLE ESTIMATE
 const getEstimate = async () => {
     const docSnap = await getDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.client_id, 'estimates', route.params.estimate_id))
     if (docSnap.exists()) {  
@@ -165,7 +165,6 @@ const getEstimate = async () => {
     }
 }
 
-
 const updateEstimate = async () => {
         //console.log(content)
         await setDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.client_id, 'estimates', route.params.estimate_id), estimate.value)
@@ -175,6 +174,21 @@ router.back()
 const deleteEstimate = async () => {
     await deleteDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.client_id, 'estimates', route.params.estimate_id))
     router.push('/')
+}
+
+//DISABLE UPDATE ESTIMATE BUTTON
+const formValidated = ref(false)
+
+const validateForm = () => {
+    formValidated.value = true
+
+    for (const property in estimate.value) {
+      console.log(`${property}: ${estimate.value[property]}`)
+      console.log(estimate.value[property])
+      if(estimate.value[property] == null){
+        formValidated.value = false
+      }
+    }
 }
 
 onMounted(() => {

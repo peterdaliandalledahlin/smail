@@ -7,17 +7,18 @@
 
 <script setup>
 //IMPORTS
-  import { onMounted } from 'vue'
-  import NavBar from '@/components/layout/NavBar.vue'
-  import { useStoreAuth } from './stores/storeAuth'
+import { onMounted } from 'vue'
+import NavBar from '@/components/layout/NavBar.vue'
+import { useStoreAuth } from './stores/storeAuth'
 
-//STORE
+//GET USER FROM AUTHSTORE
   const storeAuth = useStoreAuth()
 
-//MOUNTED
-  onMounted(() => {
-    storeAuth.init()
-  })
+//INITIALIZE USER FROM AUTH
+onMounted(() => {
+  storeAuth.init()
+})
+  
 </script>
 
 <style>

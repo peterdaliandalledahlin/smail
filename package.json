@@ -1,5 +1,5 @@
 {
-  "name": "vue-noteballs",
+  "name": "vue-smail",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --host",

@@ -20,7 +20,7 @@ app.directive('focus', {
   })
 
 let currentLanguage = ref('sv')
-app.provide(currentLanguage)
+app.provide('currentLanguage', currentLanguage)
 
 const formDefinition = {
     estimations: [

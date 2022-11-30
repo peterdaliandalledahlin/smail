@@ -1,5 +1,5 @@
 <template>
-
+<!--DETAIL CLIENT DATA-->
     <div class="card mb-3">
         <header class="card-header">
             <p class="card-header-title">
@@ -17,6 +17,9 @@
                     <tbody>
                         <tr>
                             <th>ID</th><td>{{ route.params.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Klient skapad</th><td>{{ dateFormatted(client.createdAt) }}</td>
                         </tr>
                         <tr>
                             <th>Förnamn</th><td>{{ client.firstName }}</td>
@@ -41,30 +44,38 @@
             <router-link :to="`/add-estimate/${route.params.id}`" href="#" class="card-footer-item">Lägg till Skattning</router-link>
         </footer>
     </div>
-    
-    
-    <div class="card">
-        <header class="card-header">
-            <p class="card-header-title">
-                Sammanställning skattningar
-            </p>
-            <button class="card-header-icon" aria-label="more options">
-                <span class="icon">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-            </button>
-        </header>
-        <div class="card-content">
-            <div class="content">
-                <canvas id="myChart" width="100%" height="300"></canvas>
-            </div>
-        </div>
-    </div>
 
-    <div class="card" v-for="estimate in estimates" :key="estimate.id">
+    <!--LOADING-->
+    <progress v-if="!clientsLoaded" class="progress is-large is-success" max="100" />
+
+      <template
+        v-else
+      >
+
+      <!--CHARTJS ESTIMATES COMPILATION-->
+      <div class="card">
+          <header class="card-header">
+              <p class="card-header-title">
+                  Sammanställning skattningar
+              </p>
+              <button class="card-header-icon" aria-label="more options">
+                  <span class="icon">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+              </button>
+          </header>
+          <div class="card-content">
+              <div class="content">
+                  <canvas id="myChart" width="100%" height="300"></canvas>
+              </div>
+          </div>
+      </div>
+
+      <!--ESTIMATES LIST-->
+      <div class="card" v-for="estimate in estimates" :key="estimate.id">
         <header class="card-header">
             <p class="card-header-title">
-            {{estimate.date}}
+            {{ dateFormatted(estimate.createdAt) }}
             </p>
             <button class="card-header-icon" aria-label="more options">
             <span class="icon">
@@ -77,8 +88,85 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Skattning gjord</th><td>{{ dateFormatted }}</td>
+                            <th>Skattning gjord</th><td>{{ dateFormatted(estimate.createdAt) }}</td>
                         </tr>
+                        <tr>
+                            <td>Tror du att du kan klara av att arbeta?</td><td>{{ estimate.beliefInWork }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tror du att dina kompetenser är till nytta på en arbetsplats?</td><td>{{ estimate.laborMarket }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?</td><td>{{ estimate.purposeFulness }}</td>
+                        </tr>
+                        <tr>
+                            <td>Hur bra är du på att samarbeta med andra?</td><td>{{ estimate.abilityToWorkTogether }}</td>
+                        </tr>
+                        <tr>
+                            <td>Har du tid i vardagen at fokusera på att få ett arbete/praktik eller utbildning?</td><td>{{ estimate.handlingOfEverydayLife }}</td>
+                        </tr>
+                        <tr>
+                            <td>Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?</td><td>{{ estimate.stateOfHealth }}</td>
+                        </tr>
+                        <tr>
+                            <th>Hur söker du ett arbete?</th>
+                        </tr>
+                        <tr>
+                            <td>Genom annonser i tidningar, tidskrifter och liknande</td><td><span class="tag" :class="estimate.adverts === true ? 'is-success' : 'is-danger'">{{ estimate.adverts === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Genom jobbportaler via internet</td><td><span class="tag" :class="estimate.jobportal === true ? 'is-success' : 'is-danger'">{{ estimate.jobportal === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har kontaktat en arbetsgivare på eget initiativ <small>(ex. ringt, skickat in en spontanansökan eller besökt deras arbetsplats)</small></td><td><span class="tag" :class="estimate.employer === true ? 'is-success' : 'is-danger'">{{ estimate.employer === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har frågat min familj, vänner och bekanta om de känner någon som kan hjälpa mig att hitta ett arbete</td><td><span class="tag" :class="estimate.family === true ? 'is-success' : 'is-danger'">{{ estimate.family === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Har gjort min praktik uppmärksam på att jag gärna vill ha en anställning efter att praktiken är över</td><td><span class="tag" :class="estimate.internship === true ? 'is-success' : 'is-danger'">{{ estimate.internship === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bemanningsföretag, rekryteringsbyrå</td><td><span class="tag" :class="estimate.staffingcompanies === true ? 'is-success' : 'is-danger'">{{ estimate.staffingcompanies === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Social medier, Facebook och LinkedIn t.ex.</td><td><span class="tag" :class="estimate.socialmedia === true ? 'is-success' : 'is-danger'">{{ estimate.socialmedia === true ? 'Ja' : 'Nej' }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jag letar inte efter arbete <small>(eftersom jag är sjuk eller av andra skäl)</small></td><td><span class="tag" :class="estimate.notlookingforwork === true ? 'is-success' : 'is-danger'">{{ estimate.notlookingforwork === true ? 'Ja' : 'Nej'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Annat sätt;</td><td><span class="tag is-light">{{ estimate.otherways }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="card-footer">
+            <a href="#" class="card-footer-item">Avbryt</a>
+            <router-link :to="`/client/${route.params.id}/estimate/${estimate.id}`" href="#" class="card-footer-item">Edit Estimate</router-link>
+        </footer>
+    </div>
+
+    <!--FOUND NO ESTIMATES-->
+    <div
+    v-if="!estimates.length"
+    class="is-size-4 has-text-centered has-text-grey-light is-family-monospace py-6"
+    >
+    Det finns inga skattningar att hämta...
+    </div>
+</template>
+    
+
+    <!-- <div class="tabs">
+    <ul v-for="estimate in estimates" :key="estimate.id">
+      <li v-bind:class="{ 'is-active': isActive == dateFormatted(estimate.date) }"><a v-on:click="isActive = dateFormatted(estimate.date)">{{dateFormatted(estimate.date)}}</a></li>
+    </ul>
+    </div>
+    <div class="tab-contents" v-for="estimate in estimates" :key="estimate.id">
+        <div class="content" v-bind:class="{ 'is-active': isActive == dateFormatted(estimate.date) }">
+            <table class="table">
+                    <tbody>
                         <tr>
                             <td>Tror du att du kan klara av att arbeta?</td><td>{{ estimate.beliefInWork }}</td>
                         </tr>
@@ -129,33 +217,56 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
         </div>
-        <footer class="card-footer">
-            <a href="#" class="card-footer-item">Avbryt</a>
-            <router-link :to="`/client/${route.params.id}/estimate/${estimate.id}`" href="#" class="card-footer-item">Edit Estimate</router-link>
-        </footer>
-    </div>
- 
+    </div> -->
+
+    
+
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+//IMPORTS
+import { onMounted, ref } from 'vue'
 import { doc, getDoc, getDocs, collection, deleteDoc } from 'firebase/firestore'
 import { db } from '../js/firebase'
 import { useStoreAuth } from '../stores/storeAuth'
 import { useRoute, useRouter } from 'vue-router'
 import Chart from 'chart.js/auto'
 import { useDateFormat } from '@vueuse/core'
-const storeAuth = useStoreAuth() 
+
+//let isActive = ref() //LOOP TABS
+
+let clientsLoaded = ref(true)
+
+//GET USER FROM AUTH
+const storeAuth = useStoreAuth()
+
+//GET ID FROM PARAMS AND REDIRECT
 const route = useRoute()
 const router = useRouter()
+
+//INITIALIZE ARRAYS
 let client = ref({})
 let estimates = ref([])
+
+//INITIALIZE CHARTJS
 const myChart = ref()
 
+//BACK BUTTON
 const goBack = () => {
     router.back()
+}
+
+//HANDLE CLIENT
+const getClient = async () => {
+    clientsLoaded = false
+    const docSnap = await getDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.id))
+    if (docSnap.exists()) {  
+      client.value = docSnap.data()
+      clientsLoaded = true
+    } else {
+      console.log("No such document!")
+    }
 }
 
 const deleteClient = async () => {
@@ -163,25 +274,14 @@ const deleteClient = async () => {
     router.push('/')
 }
 
-const getClient = async () => {
-    const docSnap = await getDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.id))
-    if (docSnap.exists()) {  
-      console.log("Document data:", docSnap.data())
-      client.value = docSnap.data()
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!")
-    }
-}
-
+//HANDLE ESTIMATES
 const getEstimates = async () => {
     const querySnapshot = await getDocs(collection(db, 'users', storeAuth.user.id, 'clients', route.params.id, 'estimates'))
     querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data())
+        //console.log(doc.id, ' => ', doc.data())
         let estimate = {
             id: doc.id,
-            date: doc.data().date,
+            createdAt: doc.data().createdAt,
             abilityToWorkTogether: doc.data().abilityToWorkTogether,
             beliefInWork: doc.data().beliefInWork,
             handlingOfEverydayLife: doc.data().handlingOfEverydayLife,
@@ -192,7 +292,7 @@ const getEstimates = async () => {
             employer: doc.data().employer,
             family: doc.data().family,
             internship: doc.data().internship,
-            jobportal: doc.data().jobbportal,
+            jobportal: doc.data().jobportal,
             laborMarket: doc.data().laborMarket,
             notlookingforwork: doc.data().notlookingforwork,
             otherways: doc.data().otherways,
@@ -201,44 +301,40 @@ const getEstimates = async () => {
             }
             estimates.value.push(estimate)
     })
-    console.log(estimates.value)
+    //console.log(estimates.value)
 }
 
-const dateFormatted = computed(() => {
-        let date = new Date(parseInt(estimates.value.date))
-        const formattedDate = useDateFormat(date, 'YYYY-MM-DD HH:mm:ss')
+//FORMATTING DATE
+const dateFormatted = (id) => {
+    //console.log(id)
+    let date = new Date(parseInt(id))
+        //console.log(date)
+        //const formattedDate = useDateFormat(date, 'YYYY-MM-DD',  { locales: 'sv-SE' })
+        const formattedDate = useDateFormat(date, 'YYYY-MM-DD')
+        //console.log(formattedDate.value)
         return formattedDate.value
-    })
- 
-// const getEstimate = async () => {
+        //'YYYY-MM-DD HH:mm:ss'
+}
 
-//     const docSnap = await getDoc(docRefEstimate)
-//     if (docSnap.exists()) {
-//     console.log("Document data:", docSnap.data())
-//     } else {
-//     // doc.data() will be undefined in this case
-//     console.log("No such document!")
-//     }
-// }
-
+//FETCH CLIENT INITIALIZE CHARTJS ONMOUNTED
 onMounted( async () => {
+
     getClient()
-    //getEstimate()
+    
     await getEstimates()
     const datasets = []
     function getRandomColor() {
-            var letters = '0123456789ABCDEF'.split('');
-            var color = '#';
-            for (var i = 0; i < 6; i++ ) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-                }
+        var letters = '0123456789ABCDEF'.split('')
+        var color = '#'
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)]
+        }
+        return color
+    }
 
     estimates.value.forEach((estimate) => {
-        //console.log(estimate.abilityToWorkTogether)
         let obj = {
-            label: estimate.date,
+            label: dateFormatted(estimate.createdAt),
             backgroundColor: 'rgba(179,181,198,0.2)',
             borderColor: getRandomColor(),
             pointBackgroundColor: 'rgba(179,181,198,1)',
@@ -250,7 +346,6 @@ onMounted( async () => {
         datasets.push(obj)
     })
     
-    console.log(datasets)
     const ctx = document.getElementById('myChart');
     const myChart = new Chart(ctx, {
     type: 'line',
@@ -281,10 +376,15 @@ onMounted( async () => {
 
 })
 
-
 </script>
 
 <style scoped>
+.tab-contents .content {
+  display: none;
+}
+.tab-contents .content.is-active {
+  display: block;
+}
 .card-footer-item {
     justify-content: center;
 }

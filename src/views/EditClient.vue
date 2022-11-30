@@ -31,19 +31,27 @@
                 </div>
 
             </div>
-            <button @click="updateClient" class="btn">Uppdatera klient</button>
+            <button @click="router.back()" class="button">Avbryt</button>
+            <button @click="updateClient" class="button is-success">Uppdatera klient</button>
     </div>
 </template>
 
 <script setup>
+//IMPORTS
 import { onMounted, ref } from "vue"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { db } from '../js/firebase'
 import { useStoreAuth } from '../stores/storeAuth'
 import { useRoute, useRouter } from 'vue-router'
-const storeAuth = useStoreAuth() 
+
+//GET USER FROM AUTH
+const storeAuth = useStoreAuth()
+
+//GET ID FROM PARAMS AND REDIRECT
 const route = useRoute()
 const router = useRouter()
+
+//INITIALIZE CLIENT AND UPDATE CLIENT
 let client = ref({})
 
 const getClient = async () => {
@@ -58,21 +66,22 @@ const getClient = async () => {
 }
 
 const updateClient = async () => {
-        //console.log(content)
-        await setDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.id), {
-  firstName: client.value.firstName,
-  birthYear: client.value.birthYear,
-  email: client.value.email,
-  annotation: client.value.annotation
-})
-router.back()
-      }
 
+    let currentDate = new Date().getTime(),
+    updatedAt = currentDate.toString()
+
+    await setDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.id), {
+        firstName: client.value.firstName,
+        birthYear: client.value.birthYear,
+        email: client.value.email,
+        annotation: client.value.annotation,
+        updatedAt
+    })
+    router.back()
+}
+
+//FETCH CLIENT ONMOUNT
 onMounted(async () => {
     await getClient()
 })
 </script>
-
-<style>
-
-</style>
