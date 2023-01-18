@@ -42,7 +42,7 @@
             </div>
 
         </div>
-        <button type="submit" class="button is-success mb-3 ml-3">Lägg till klient</button>
+        <button type="submit" class="button is-small mb-3 ml-3">Lägg till klient</button>
     </div>
   </form>
 
@@ -71,7 +71,7 @@
       </header>
       <div class="card-content">
           <div class="field">
-            <input class="input" type="text" v-model="search" placeholder="Sök klient.."/>
+            <input class="input" type="text" v-model="search" placeholder="Sök på förnamn..."/>
           </div>
       </div>
   </div>
@@ -146,6 +146,7 @@ const addClient = async ()  => {
    birthYear: birthYear.value,
    email: email.value,
    annotation: annotation.value,
+   userId: storeAuth.user.id,
    createdAt
  })
    firstName.value = ''
@@ -161,6 +162,13 @@ const addClient = async ()  => {
 </script>
   
 <style scoped>
+.button.mb-3.ml-3 {
+  background-color: #43165c;
+  color: azure;
+}
+.button.mb-3.ml-3:hover {
+  filter: brightness(1.2)
+}
 .card-footer-item {
   justify-content: flex-start !important;
 }

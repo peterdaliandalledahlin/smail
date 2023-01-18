@@ -15,7 +15,7 @@ export const useStoreAuth = defineStore('storeAuth', {
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                  //console.log(user)
+                  console.log(user)
                   //const uid = user.uid
                   this.user.id = user.uid
                   this.user.email = user.email

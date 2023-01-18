@@ -89,7 +89,7 @@
 
     <!--CANCEL AND ADD ESTIMATE BUTTON-->
     <button class="button" @click="router.back()">Avbryt</button>
-    <button class="button is-success ml-3" @click="addEstimate" :disabled="!formValidated">Lägg till skattning</button>
+    <button class="button ml-3" @click="addEstimate" :disabled="!formValidated">Lägg till skattning</button>
     
     <!--SHOW NOTIFICATION WHEN SAVE SUCCESS-->
     <Notification v-if="notification">
@@ -148,6 +148,7 @@ const addEstimate = async () => {
     let currentDate = new Date().getTime()
 
     estimate.value.createdAt = currentDate.toString()
+    estimate.value.clientId = route.params.id
     console.log(estimate.value)
 
     const docRef = await addDoc(collection(db, 'users', storeAuth.user.id, 'clients', route.params.id, 'estimates'), estimate.value)
@@ -224,12 +225,15 @@ input[type='radio']:not(:checked)+div {
     border: 2px solid transparent;
 }
 input[type='radio']:checked+div {
-    border: 2px solid green;
+    border: 2px solid #43165c;
     -webkit-box-shadow: 4px 5px 6px -4px #000000; 
     box-shadow: 4px 5px 6px -4px #000000;
 }
+.switch input[type=checkbox]:checked+.check {
+    background: #43165c;
+}
 .fieldset{
-   background-color: hsl(171, 100%, 96%);
+   background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
     color: #4a4a4a;
@@ -242,7 +246,7 @@ input[type='radio']:checked+div {
     display: block;
     font-size: 1rem;
     font-weight: 700;
-    background-color: hsl(171, 100%, 96%);
+    background-color: #fff;
     padding: 0 5px;
 	width: max-content;
 	border: 0 none;
@@ -315,6 +319,10 @@ section {
 .form .plan input:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
   /* border: 1px solid #333; */
   /* background-color: #2fcc71; */
-  background-color: hsl(171, 100%, 41%);
+  background-color: #43165c;
+}
+.button.ml-3 {
+    background-color: #43165c;
+    color: azure;
 }
 </style>

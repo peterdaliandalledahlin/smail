@@ -26,7 +26,7 @@
             </div>
         </div>
         <footer class="card-footer">
-            <router-link :to="`/client/${props.client.id}`" href="#" class="card-footer-item">Visa klient</router-link>
+            <router-link :to="`/client/${props.client.id}`" href="#" class="card-footer-item"> <span>&nbsp;Visa klient&nbsp;</span></router-link>
         </footer>
     </div>
 
@@ -63,5 +63,11 @@ const dateFormatted = computed(() => {
 <style scoped>
 .card-footer-item[data-v-b49f0a3c] {
     justify-content: flex-start !important;
+}
+span {
+    background-color: #43165c;
+    color: azure;
+    padding: 3px;
+    font-size: small;
 }
 </style>

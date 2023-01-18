@@ -37,11 +37,12 @@
                 </table>   
             </div>
         </div>
-        <footer class="card-footer">
-            <a @click="goBack" href="#" class="card-footer-item">Avbryt</a>
+        <footer class="card-footer pb-2">
+            <a @click="goBack" href="#" class="card-footer-item ml-2">Avbryt</a>
             <router-link :to="`/edit-client/${route.params.id}`" href="#" class="card-footer-item">Uppdatera klient</router-link>
             <a @click="deleteClient" href="#" class="card-footer-item">Radera klient</a>
             <router-link :to="`/add-estimate/${route.params.id}`" href="#" class="card-footer-item">Lägg till Skattning</router-link>
+            <router-link :to="`/development-plan/${route.params.id}`" href="#" class="card-footer-item mr-2">Till Utvecklingsplanen</router-link>
         </footer>
     </div>
 
@@ -70,6 +71,9 @@
               </div>
           </div>
       </div>
+
+      <!-- <button @click="chartType" class="button">Line</button>
+      <button @click="chartType" class="button">Radar</button> -->
 
       <!--ESTIMATES LIST-->
       <div class="card" v-for="estimate in estimates" :key="estimate.id">
@@ -146,7 +150,7 @@
             <a href="#" class="card-footer-item">Avbryt</a>
             <router-link :to="`/client/${route.params.id}/estimate/${estimate.id}`" href="#" class="card-footer-item">Edit Estimate</router-link>
         </footer>
-    </div>
+      </div>
 
     <!--FOUND NO ESTIMATES-->
     <div
@@ -155,7 +159,7 @@
     >
     Det finns inga skattningar att hämta...
     </div>
-</template>
+     </template>
     
 
     <!-- <div class="tabs">
@@ -322,7 +326,10 @@ onMounted( async () => {
     getClient()
     
     await getEstimates()
+
     const datasets = []
+    const labels = []
+
     function getRandomColor() {
         var letters = '0123456789ABCDEF'.split('')
         var color = '#'
@@ -330,6 +337,18 @@ onMounted( async () => {
             color += letters[Math.floor(Math.random() * 16)]
         }
         return color
+    }
+
+    const getLabelIndex = (x, y, pointLabels) => {
+        let index = -1
+        for(let i = 0; i < pointLabels.length; i++) {
+            const { top, right, bottom ,left } = pointLabels[i]
+            if( x >= left && x <= right && y >= top && y <= bottom) {
+                index = i
+                break
+            }
+        }
+        return index
     }
 
     estimates.value.forEach((estimate) => {
@@ -345,35 +364,248 @@ onMounted( async () => {
         }
         datasets.push(obj)
     })
-    
-    const ctx = document.getElementById('myChart');
-    const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Individens tro på att få ett arbete','Kunskap om arbetsmarknaden','Målmedvetenhet','Samarbetsförmåga','Hantering av vardagen','Hälsotillstånd'],
-        datasets: datasets
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: `Skattningar gällande ${client.value.email}`
-            }
-        },
-        scales: {
-          y: {
-            min: 0,
-            max: 5,
-            ticks: {
-              stepSize: 1,
-            }
-          }
+
+    let lineButtonCoordinates = [{
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }]
+
+    let radarButtonCoordinates = [{
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }]
+
+    const lineChartButton = {
+        id: 'lineChartButton',
+        beforeDraw(chart, arg, options){
+            const { ctx, chartArea: {top, bottom, left, right, width, height}} = chart
+            ctx.save()
+            ctx.font =  '12px Arial'
+            const text = 'Linjediagram'
+            const textWidth = ctx.measureText(text).width
+            //console.log(textWidth)
+
+            ctx.fillStyle = '#43165c'
+            ctx.fillRect(right - (textWidth + 11), 3, textWidth + 10, 15)
+
+            ctx.strokeStyle = '#43165c'
+            ctx.strokeRect(right - (textWidth + 11), 3, textWidth + 10, 15)
+
+            ctx.fillStyle = '#fff'
+            ctx.textAlign = 'left'
+            ctx.fillText(text, right - (textWidth + 6), 10)
+
+            lineButtonCoordinates[0].top = 5
+            lineButtonCoordinates[0].bottom = 18 
+            lineButtonCoordinates[0].left = right - (textWidth + 11)
+            lineButtonCoordinates[0].right = right
+            ctx.restore()
+
+            //console.log(lineButtonCoordinates)
+
         }
     }
-})
 
+    const radarChartButton = {
+        id: 'radarChartButton',
+        beforeDraw(chart, arg, options){
+            const { ctx, chartArea: {top, bottom, left, right, width, height}} = chart
+            ctx.save()
+            ctx.font =  '12px Arial'
+            const text = 'Spindeldiagram'
+            const textWidth = ctx.measureText(text).width
+            //console.log(textWidth)
+
+            ctx.fillStyle = '#43165c'
+            ctx.fillRect(right - (textWidth + 100), 3, textWidth + 10, 15)
+
+            ctx.strokeStyle = '#43165c'
+            ctx.strokeRect(right - (textWidth + 100), 3, textWidth + 10, 15)
+
+            ctx.fillStyle = '#fff'
+            ctx.textAlign = 'left'
+            ctx.fillText(text, right - (textWidth + 98), 10)
+
+            radarButtonCoordinates[0].top = 5
+            radarButtonCoordinates[0].bottom = 18 
+            radarButtonCoordinates[0].left = right - (textWidth + 100)
+            radarButtonCoordinates[0].right = right - textWidth
+            ctx.restore()
+
+            //console.log(lineButtonCoordinates)
+
+        }
+    }
+
+    const config_radar = {
+        type: 'radar',
+        data: {
+            labels: ['Individens tro på att få ett arbete','Kunskap om arbetsmarknaden','Målmedvetenhet','Samarbetsförmåga','Hantering av vardagen','Hälsotillstånd'],
+            labelLink: ['individual', 'knowledge', 'purposefulness', 'cooperation','everydaylife','stateofhealth'],
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Skattningar gällande ${client.value.email}`
+                }
+            },
+            scales: {
+                r: {
+                    min: 0,
+                    max: 5,
+                    ticks: {
+                        stepSize: 1,
+                    }
+                }
+            },
+            onHover: ({ x, y }, activeHover, chart) => {
+                //console.log(x, y)
+                const { canvas } = chart
+                //console.log(chart.scales.r._pointLabelItems)
+                let index = getLabelIndex(x, y, chart.scales.r._pointLabelItems)
+                //console.log(index)
+                if(index === -1) {
+                    canvas.style.cursor = 'default'
+                } else {
+                    canvas.style.cursor = 'pointer'
+                }
+            },
+            onClick: ({ x, y }, activeClick, chart) => {
+                let index = getLabelIndex(x, y, chart.scales.r._pointLabelItems)
+                if(index === -1) {
+                    return
+                }
+                const selectedLabel = chart.scales.r
+                //console.log(chart.scales.r._pointLabels[index])
+                router.push(`/${myChart.config.data.labelLink[index]}`)
+
+            }
+        },
+        plugins: [lineChartButton, radarChartButton]
+    }
+
+    const config_line = {
+        type: 'line',
+        data: {
+            labels: ['Individen','Kunskap','Målmedvetenhet','Samarbetsförmåga','Vardagen','Hälsotillstånd'],
+            //labels: ['Individens tro på att få ett arbete','Kunskap om arbetsmarknaden','Målmedvetenhet','Samarbetsförmåga','Hantering av vardagen','Hälsotillstånd'],
+            labelLink: ['individual', 'knowledge', 'purposefulness', 'cooperation','everydaylife','stateofhealth'],
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Skattningar gällande ${client.value.email}`
+                }
+            },
+            scales: {
+                x: {
+                    min: 0,
+                    max: 5,
+                    ticks: {
+                        stepSize: 1,
+                    }
+                }
+            }
+        },
+        plugins: [lineChartButton, radarChartButton]
+    }
+
+    const ctx = document.getElementById('myChart')
+    let myChart = new Chart(
+        ctx,
+        config_radar
+    )
+
+    function handleLineButtonClick(ctx, click) {
+        const x = click.offsetX
+        const y = click.offsetY
+        //console.log(x,y)
+        const top = lineButtonCoordinates[0].top
+        const bottom = lineButtonCoordinates[0].bottom
+        const left = lineButtonCoordinates[0].left
+        const right = lineButtonCoordinates[0].right
+
+        if(x > left && x < right && y > top && y < bottom){
+            myChart.destroy()
+            myChart = new Chart(
+                ctx,
+                config_line
+            )
+        }
+    }
+
+    function handleRadarButtonClick(ctx, click) {
+        const x = click.offsetX
+        const y = click.offsetY
+        //console.log(x,y)
+        const top = radarButtonCoordinates[0].top
+        const bottom = radarButtonCoordinates[0].bottom
+        const left = radarButtonCoordinates[0].left
+        const right = radarButtonCoordinates[0].right
+
+        if(x > left && x < right && y > top && y < bottom){
+            console.log('button clicked')
+            myChart.destroy()
+            myChart = new Chart(
+                ctx,
+                config_radar
+            )
+        }
+    }
+
+    ctx.addEventListener('click', (e) => {
+        handleLineButtonClick(ctx, e)
+    })
+
+    ctx.addEventListener('click', (e) => {
+        handleRadarButtonClick(ctx, e)
+    })
+
+    
+    //console.log(myChart.scales.r)
+    
+    function clickableScales(canvas, click){
+
+        //const height = myChart.scales.x.height
+        const top = myChart.scales.x.top
+        const bottom = myChart.scales.x.bottom
+        const left = myChart.scales.x.left
+        const right = myChart.scales.x.maxWidth / myChart.scales.x.ticks.length
+
+        //console.log(right)
+        let resetCoordinates = canvas.getBoundingClientRect()
+        //console.log(click)
+        const x = click.clientX - resetCoordinates.left;
+        const y = click.clientY - resetCoordinates.top;
+        //console.log(x)
+        //console.log(y)
+
+        for(let i = 0; i < myChart.scales.x.ticks.length; i++){
+
+            if(x >= left + (right * i) && x <= right + (right * i) && y >= top && y <= bottom){
+                router.push(`/${myChart.config.data.labelLink[i]}`)
+            }
+
+        }
+
+    }
+    
+    ctx.addEventListener('click', (e) => {
+        clickableScales(ctx, e)
+    })
+    
 })
 
 </script>
@@ -383,9 +615,14 @@ onMounted( async () => {
   display: none;
 }
 .tab-contents .content.is-active {
-  display: block;
+    display: block;
 }
 .card-footer-item {
+    background-color: #43165c;
+    color: azure;
     justify-content: center;
+}
+.card-footer-item:hover {
+  filter: brightness(1.2)
 }
 </style>

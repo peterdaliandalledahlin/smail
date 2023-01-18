@@ -3,15 +3,20 @@ import { useStoreAuth } from '../stores/storeAuth'
 //import ViewNotes from '@/views/ViewNotes.vue'
 //import ViewEditNote from '@/views/ViewEditNote.vue'
 //import ViewEditClient from '@/views/ViewEditClient.vue'
-import ViewStats from '@/views/ViewStats.vue'
 import ViewAuth from '@/views/ViewAuth.vue'
 import ViewChart from '@/views/ViewChart.vue'
 import ViewClients from '@/views/ViewClients.vue'
 import ViewClient from '@/views/ViewClient.vue'
 import EditClient from '@/views/EditClient.vue'
 import AddEstimate from '@/views/AddEstimate.vue'
-import GoogleCharts from '@/views/GoogleCharts.vue'
 import EditEstimate from '@/views/EditEstimate.vue'
+import DevelopmentPlan from '@/views/DevelopmentPlan.vue'
+import Individual from '@/views/Individual.vue'
+import Knowledge from '@/views/Knowledge.vue'
+import Purposefulness from '@/views/Purposefulness.vue'
+import Cooperation from '@/views/Cooperation.vue'
+import Everydaylife from '@/views/Everydaylife.vue'
+import Stateofhealth from '@/views/Stateofhealth.vue'
 
 const routes = [
     {
@@ -30,6 +35,11 @@ const routes = [
     //     component: ViewEditClient
     // },
     {
+        path: '/client/:id',
+        name: 'view-client',
+        component: ViewClient
+    },
+    {
         path: '/edit-client/:id',
         name: 'edit-client',
         component: EditClient
@@ -40,9 +50,9 @@ const routes = [
         component: AddEstimate
     },
     {
-        path: '/client/:id',
-        name: 'view-client',
-        component: ViewClient
+        path: '/development-plan/:id',
+        name: 'development-plan',
+        component: DevelopmentPlan
     },
     {
         path: '/client/:client_id/estimate/:estimate_id',
@@ -50,14 +60,34 @@ const routes = [
         component: EditEstimate
     },
     {
-        path: '/google-chart',
-        name: 'google-chart',
-        component: GoogleCharts
+        path: '/individual',
+        name: 'individual',
+        component: Individual
     },
     {
-        path: '/stats',
-        name: 'stats',
-        component: ViewStats
+        path: '/knowledge',
+        name: 'knowledge',
+        component: Knowledge
+    },
+    {
+        path: '/purposefulness',
+        name: 'purposefulness',
+        component: Purposefulness
+    },
+    {
+        path: '/cooperation',
+        name: 'cooperation',
+        component: Cooperation
+    },
+    {
+        path: '/everydaylife',
+        name: 'everydaylife',
+        component: Everydaylife
+    },
+    {
+        path: '/stateofhealth',
+        name: 'stateofhealth',
+        component: Stateofhealth
     },
     {
         path: '/auth',

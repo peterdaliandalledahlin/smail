@@ -2,8 +2,8 @@
   <div class="auth">
       <div class="tabs is-centered">
         <ul>
-          <li :class="{ 'is-active' : !register }"><a @click.prevent="register = false">Login</a></li>
-          <li :class="{ 'is-active' : register }"><a @click.prevent="register = true">Register</a></li>
+          <li :class="{ 'is-active' : !register }"><a @click.prevent="register = false">Logga in</a></li>
+          <li :class="{ 'is-active' : register }"><a @click.prevent="register = true">Registrera</a></li>
       </ul>
     </div>
     <div class="card auth-form">
@@ -15,18 +15,18 @@
           <div class="field">
             <label class="label">Email</label>
             <div class="control">
-              <input v-model="credentials.email" class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+              <input v-model="credentials.email" class="input" type="email" placeholder="ex. namn.namn@gmail.com">
             </div>
           </div>
           <div class="field">
             <label class="label">Password</label>
             <div class="control">
-              <input v-model="credentials.password" class="input" type="password" placeholder="Enter a password">
+              <input v-model="credentials.password" class="input" type="password" placeholder="Ange ett lösenord">
             </div>
           </div>
           <div class="field is-grouped is-grouped-right">
             <p class="control">
-              <button class="button is-primary">
+              <button class="button">
                 {{ formTitle }}
               </button>
             </p>
@@ -50,7 +50,7 @@
 
 //FORM TITLE
   const formTitle = computed(() => {
-    return register.value ? 'Register' : 'Login'
+    return register.value ? 'Registrera' : 'Logga in'
   })
 
 //SUBMIT
@@ -77,6 +77,10 @@
 </script>
 
 <style scoped>
+button {
+  background-color: #43165c;
+  color: azure;
+}
 .auth-form {
   max-width: 400px;
   margin: 0 auto;
