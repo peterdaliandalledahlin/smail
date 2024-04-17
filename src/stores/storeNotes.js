@@ -102,11 +102,11 @@ export const useStoreNotes = defineStore('storeNotes', {
             subtitle: 'Tror du att du kan klara av att arbeta?',
             propertyName: 'beliefInWork',
             options: [
-                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta', audio: '/sv/likeitloud.mp3'},
-                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta', audio: '/sv/ringside.mp3'},
-                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta', audio: '/sv/slippingaway.mp3'},
-                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta', audio: '/sv/snowprincess.mp3'},
-                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta', audio: '/sv/soulicious.mp3'},
+                {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta'},
+                {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta'},
+                {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta'},
+                {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta'},
+                {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta'},
             ]
         },
         {
@@ -169,7 +169,81 @@ export const useStoreNotes = defineStore('storeNotes', {
                 {value: 5, description: 'Mitt hälsotillstånd hindar mig inte från att arbeta'},
             ]    
         },
-      ], 
+      ],
+      estimatesTI: [
+        {
+            title: 'እቲ ውልቀ ሰብ ስራሕ ኣብ ምርካብ ዘለዎ እምነት',
+            subtitle: 'ስራሕ ክትጻወሮ ትኽእል ዲኻ ትብል?',
+            propertyName: 'beliefInWork',
+            options: [
+                {value: 1, description: 'ስራሕ ክጻወሮ ዝኽእል ኣይመስለንን።'},
+                {value: 2, description: 'ክሰርሕ ክኽእል እንተኾይነ ኣዝየ ርግጸኛ ኣይኮንኩን።'},
+                {value: 3, description: 'ስራሕ ክጻወሮ ይኽእል ድዩ ኣይክእልን ርግጸኛ ኣይኮንኩን።'},
+                {value: 4, description: 'ክሰርሕ ከም ዝኽእል ምኽንያታዊ እምነት ኣለኒ።'},
+                {value: 5, description: 'ክሰርሕ ከም ዝኽእል ፍጹም ርግጸኛ እየ'},
+            ]
+        },
+        {
+            title: 'ፍልጠት ዕዳጋ ስራሕ',
+            subtitle: 'ኣብ ናይ ስራሕ ቦታ ክእለትካ ጠቓሚ ይመስለካ?',
+            propertyName: 'laborMarket',
+            options: [
+                {value: 1, description: 'ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ኣፍልጦ ዘለኒ ኣይመስለንን።'},
+                {value: 2, description: 'ብመጠኑ ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ገለ ፍልጠት ከም ዘለኒ እኣምን።'},
+                {value: 3, description: 'ይፈላለ እዩ። ሓደ ሓደ ግዜ ዘቕርቦ ነገር እንተሃልዩኒ ኣይኮንኩን ርግጸኛ ኣይኮንኩን።'},
+                {value: 4, description: 'መብዛሕትኡ ግዜ ናይ ስራሕ ቦታ ከቕርብ ፍልጠት ከም ዘለኒ ርግጸኛ እየ'},
+                {value: 5, description: 'ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ፍልጠት ከም ዘለኒ ርግጸኛ እየ'},
+            ]    
+        },
+        {
+            title: 'ዕላማ ዘለዎ',
+            subtitle: 'ስራሕ ናይ ምርካብ ዕድልካ ንምምሕያሽ እንታይ ክትገብር ከም ዘለካ ትፈልጥ ዲኻ?',
+            propertyName: 'purposeFulness',
+            options: [
+                {value: 1, description: 'ስራሕ ንምርካብ እንታይ ከም ዝገብር ኣይፈልጥን እየ'},
+                {value: 2, description: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብመጠኑ እፈልጥ እየ'},
+                {value: 3, description: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ርግጸኛ ኣይኮንኩን።'},
+                {value: 4, description: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብዓቢኡ እፈልጥ እየ'},
+                {value: 5, description: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብልክዕ እፈልጥ እየ'},
+            ]    
+        },
+        {
+            title: 'ናይ ምትሕብባር ክእለት።',
+            subtitle: 'ምስ ካልኦት ኣብ ምስራሕ ክሳብ ክንደይ ንፉዕ ኢኻ?',
+            propertyName: 'abilityToWorkTogether',
+            options: [
+                {value: 1, description: 'ምስ ካልኦት ምትሕብባር ኣዝዩ ይኸብደኒ።'},
+                {value: 2, description: 'Jag har ofta svårt att samarbeta med andra'},
+                {value: 3, description: 'Det varierar. Ibland är det lätt och ibland är det svårt att samarbeta med andra'},
+                {value: 4, description: 'Jag tycker oftast att det är lätt att samarbeta med andra'},
+                {value: 5, description: 'Jag tycker att det är väldigt lätt att samarbeta med andra'},
+            ]    
+        },
+        {
+            title: 'Hanteringen av vardagen',
+            subtitle: 'Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?',
+            propertyName: 'handlingOfEverydayLife',
+            options: [
+                {value: 1, description: 'Jag har nästan aldrig förutsättningar att fokusera på det'},
+                {value: 2, description: 'Jag har oftast inte förutsättningar att fokusera på det'},
+                {value: 3, description: 'Det varierar. Ibland har jag förutsättningar och ibland inte'},
+                {value: 4, description: 'Jag har mestadels förutsättningar att fokusera på det'},
+                {value: 5, description: 'Jag har definitivt förutsättningar att fokusera på det'},
+            ]    
+        },
+        {
+            title: 'Hälsotillstånd',
+            subtitle: 'Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta eller studera?',
+            propertyName: 'stateOfHealth',
+            options: [
+                {value: 1, description: 'Mitt hälsotillstånd hindrar mig helt från att arbeta eller studera'},
+                {value: 2, description: 'Mitt hälsotillstånd medför stora begränsningar för att jag ska kunna arbeta eller studera'},
+                {value: 3, description: 'Det varierar. Ibland medför mitt häsotillstånd begränsningar, ibland inte'},
+                {value: 4, description: 'Mitt hälsotillstånd hindrar mig oftast inte från att arbeta eller studera'},
+                {value: 5, description: 'Mitt hälsotillstånd hindar mig inte från att arbeta eller studera'},
+            ]    
+        },
+      ],
       estimatesEN: [
         {
             title: 'The individuals belief in getting a job',
@@ -250,11 +324,11 @@ export const useStoreNotes = defineStore('storeNotes', {
             subtitle: 'هل تعتقد أنه يمكنك إدارة العمل؟',
             propertyName: 'beliefInWork',
             options: [
-                {value: 1, description: 'لا أعتقد أنني أستطيع العمل', audio: '/ar/asyouwere.mp3'},
-                {value: 2, description: 'أنا غير متأكد مما إذا كان بإمكاني إدارة العمل', audio: '/ar/dyalla.mp3'},
-                {value: 3, description: 'لست متأكدًا مما إذا كان بإمكاني العمل', audio: '/ar/goldencage.mp3'},
-                {value: 4, description: 'أنا متأكد بشكل معقول من أنني أستطيع العمل', audio: '/ar/guitarhouse.mp3'},
-                {value: 5, description: 'أنا متأكد من أنني أستطيع العمل', audio: '/ar/indecision.mp3'},
+                {value: 1, description: 'لا أعتقد أنني أستطيع العمل'},
+                {value: 2, description: 'أنا غير متأكد مما إذا كان بإمكاني إدارة العمل'},
+                {value: 3, description: 'لست متأكدًا مما إذا كان بإمكاني العمل'},
+                {value: 4, description: 'أنا متأكد بشكل معقول من أنني أستطيع العمل'},
+                {value: 5, description: 'أنا متأكد من أنني أستطيع العمل'},
             ]
         },
         {

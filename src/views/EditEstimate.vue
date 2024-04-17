@@ -131,7 +131,7 @@
         </div>
       </div>
       <footer class="card-footer">
-      <button :disabled="!formValidated" class="button"><a @click="updateEstimate" href="#" class="card-footer-item">Save</a></button>
+      <button :disabled="!formValidated" class="button" @click.prevent="updateEstimate">Spar</button>
         <a @click="router.back()" href="#" class="card-footer-item">Cancel</a>
         <a @click="deleteEstimate" href="#" class="card-footer-item">Delete</a>
       </footer>
@@ -165,8 +165,8 @@ const getEstimate = async () => {
 }
 
 const updateEstimate = async () => {
-        //console.log(content)
-        await setDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.client_id, 'estimates', route.params.estimate_id), estimate.value)
+  //console.log(content)
+  await setDoc(doc(db, 'users', storeAuth.user.id, 'clients', route.params.client_id, 'estimates', route.params.estimate_id), estimate.value)
 router.back()
 }
 

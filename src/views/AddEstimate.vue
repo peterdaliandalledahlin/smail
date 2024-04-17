@@ -8,6 +8,7 @@
                     <input class="language" v-model="currentLanguage" type="radio" name="language" id="sv" value="sv"><label class="free-label four" for="sv">Svenska</label>
                     <input class="language" v-model="currentLanguage" type="radio" name="language" id="ar" value="ar"><label class="between-label four" for="ar">Arabiska</label>
                     <input class="language" v-model="currentLanguage" type="radio" name="language" id="en" value="en"><label class="between-label four" for="en">Engelska</label>
+                    <input class="language" v-model="currentLanguage" type="radio" name="language" id="ti" value="ti"><label class="between-label four" for="ti">Tigrinja</label>
                     <input class="language" v-model="currentLanguage" type="radio" name="language" id="so" value="so"><label class="basic-label four" for="so">Somaliska</label>
                 </section> 
             </form>
@@ -283,7 +284,7 @@ section {
 }
 
 .cf {
-    *zoom: 1;
+    zoom: 1;
 }
 
 /* FORM */

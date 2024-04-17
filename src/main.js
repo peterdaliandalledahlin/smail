@@ -20,6 +20,7 @@ app.directive('focus', {
   })
 
 let currentLanguage = ref('sv')
+
 app.provide('currentLanguage', currentLanguage)
 
 const formDefinition = {
@@ -153,7 +154,8 @@ const formDefinition = {
             class: 'input is-success'
         },
     ]
-  }
+}
+
 app.provide('formDefinition', formDefinition)
 
 const stringsSV = {
@@ -200,24 +202,24 @@ const stringsSV = {
     ESTIMATION6_OPTION4: 'Mitt hälsotillstånd hindrar mig inte från att arbeta, men kan ibland sätta begränsningar',
     ESTIMATION6_OPTION5: 'Mitt hälsotillstånd hindrar mig inte från att arbeta',
     QUESTION1: 'Genom annonser i tidningar, tidskrifter och liknande',
-    QUESTION2: 'Genom jobbportaler via internet',
-    QUESTION3: 'Har kontaktat en arbetsgivare på eget initiativ (ex. ringt, skickat in en spontanansökan eller besökt deras arbetsplats)',
-    QUESTION4: 'Har frågat min familj, vänner och bekanta om de känner någon som kan hjälpa mig att hitta ett arbete',
-    QUESTION5: 'Har gjort min praktik uppmärksam på att jag gärna vill ha en anställning efter att praktiken är över',
-    QUESTION6: 'Bemanningsföretag, rekryteringsbyrå',
-    QUESTION7: 'Social medier, Facebook och LinkedIn t.ex.',
-    QUESTION8: 'Jag letar inte efter arbete (eftersom jag är sjuk eller av andra skäl)',
+    QUESTION2: 'Genom jobbportaler på internet',
+    QUESTION3: 'Kontaktar arbetsgivare på eget initiativ (telefon, besök, spontanansökan)',
+    QUESTION4: 'Frågar familj, vänner och bekanta om de känner någon som kan hjälpa mig att hitta arbete',
+    QUESTION5: 'Genom bemanningsföretag, rekryteringsbyrå',
+    QUESTION6: 'Genom sociala medier, Facebook, LinkedIn etc.',
+    QUESTION7: 'Gör min praktikplats uppmärksam på att jag är intresserad av arbete eller praktik',
+    QUESTION8: 'Jag letar inte efter arbete (eftersom jag är sjuk eller av annan anledning)',
     QUESTION9: ''
 }
 
 const stringsEN = {
     ESTIMATION1_TITLE: 'The individuals belief in getting a job',
     ESTIMATION1_SUBTITLE: 'Do you think that you can manage to work?',
-    ESTIMATION1_OPTION1: 'I do not think I can work',
+    ESTIMATION1_OPTION1: 'I dont think I can handle working',
     ESTIMATION1_OPTION2: 'I am very unsure if I can manage to work',
-    ESTIMATION1_OPTION3: 'I am not sure if I can work',
-    ESTIMATION1_OPTION4: 'I am reasonably sure I can work',
-    ESTIMATION1_OPTION5: 'I am pretty sure I can work',
+    ESTIMATION1_OPTION3: 'I am not sure if I can handle working',
+    ESTIMATION1_OPTION4: 'I am reasonably confident that I can manage to work',
+    ESTIMATION1_OPTION5: 'I am absolutely sure that I can manage to work',
     ESTIMATION2_TITLE: 'Knowledge of the labor market',
     ESTIMATION2_SUBTITLE: 'Do you think that your skills are useful in a workplace',
     ESTIMATION2_OPTION1: 'I do not think I have any knowledge to offer a workplace',
@@ -337,9 +339,9 @@ const stringsSO = {
     ESTIMATION3_SUBTITLE: 'Ma garanaysaa waxaad samayso si aad u wanaajiso fursadahaaga shaqo?',
     ESTIMATION3_OPTION1: 'Ma garanayo waxaan sameeyo si aan shaqo u helo',
     ESTIMATION3_OPTION2: 'Waan ogahay ilaa xad waxa aan u baahanahay inaan sameeyo si aan u wanaajiyo fursadahayga shaqo',
-    ESTIMATION3_OPTION3: 'Si fiican ayaan u garanayaa waxa aan sameeyo si aan u wanaajiyo fursadahayga shaqo',
+    ESTIMATION3_OPTION3: 'Ma hubo waxa aan samayn karo si aan u wanaajiyo fursadaha aan shaqo ku heli karo',
     ESTIMATION3_OPTION4: 'Inta badan waan garanayaa waxa aan sameeyo si aan u wanaajiyo fursadahayga shaqo',
-    ESTIMATION3_OPTION5: 'Waan garanayaa dhab ahaan waxa aan u baahanahay inaan sameeyo si aan shaqo u helo',
+    ESTIMATION3_OPTION5: 'Si sax ah ayaan u garanayaa waxa aan sameeyo si aan u wanaajiyo fursadahayga shaqo',
     ESTIMATION4_TITLE: 'Awooda iskaashi',
     ESTIMATION4_SUBTITLE: 'Sidee ugu fiican tahay inaad la shaqeyso dadka kale?',
     ESTIMATION4_OPTION1: 'Aad ayay iigu adagtahay in aan la shaqeeyo dadka kale',
@@ -372,6 +374,60 @@ const stringsSO = {
     QUESTION9: '',
 }
 
+const stringsTI = {
+    ESTIMATION1_TITLE: 'እቲ ውልቀ ሰብ ስራሕ ኣብ ምርካብ ዘለዎ እምነት',
+    ESTIMATION1_SUBTITLE: 'ስራሕ ክትጻወሮ ትኽእል ዲኻ ትብል?',
+    ESTIMATION1_OPTION1: 'ስራሕ ክጻወሮ ዝኽእል ኣይመስለንን።',
+    ESTIMATION1_OPTION2: 'ክሰርሕ ክኽእል እንተኾይነ ኣዝየ ርግጸኛ ኣይኮንኩን።',
+    ESTIMATION1_OPTION3: 'ስራሕ ክጻወሮ ይኽእል ድዩ ኣይክእልን ርግጸኛ ኣይኮንኩን።',
+    ESTIMATION1_OPTION4: 'ክሰርሕ ከም ዝኽእል ምኽንያታዊ እምነት ኣለኒ።',
+    ESTIMATION1_OPTION5: 'ክሰርሕ ከም ዝኽእል ፍጹም ርግጸኛ እየ',
+    ESTIMATION2_TITLE: 'ፍልጠት ዕዳጋ ስራሕ',
+    ESTIMATION2_SUBTITLE: 'ኣብ ናይ ስራሕ ቦታ ክእለትካ ጠቓሚ ይመስለካ?',
+    ESTIMATION2_OPTION1: 'ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ኣፍልጦ ዘለኒ ኣይመስለንን።',
+    ESTIMATION2_OPTION2: 'ብመጠኑ ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ገለ ፍልጠት ከም ዘለኒ እኣምን።',
+    ESTIMATION2_OPTION3: 'ይፈላለ እዩ። ሓደ ሓደ ግዜ ዘቕርቦ ነገር እንተሃልዩኒ ኣይኮንኩን ርግጸኛ ኣይኮንኩን።',
+    ESTIMATION2_OPTION4: 'መብዛሕትኡ ግዜ ናይ ስራሕ ቦታ ከቕርብ ፍልጠት ከም ዘለኒ ርግጸኛ እየ',
+    ESTIMATION2_OPTION5: 'ናይ ስራሕ ቦታ ከቕርብ ዝኽእል ፍልጠት ከም ዘለኒ ርግጸኛ እየ',
+    ESTIMATION3_TITLE: 'ዕላማ ዘለዎ',
+    ESTIMATION3_SUBTITLE: 'ስራሕ ናይ ምርካብ ዕድልካ ንምምሕያሽ እንታይ ክትገብር ከም ዘለካ ትፈልጥ ዲኻ?',
+    ESTIMATION3_OPTION1: 'ስራሕ ንምርካብ እንታይ ከም ዝገብር ኣይፈልጥን እየ',
+    ESTIMATION3_OPTION2: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብመጠኑ እፈልጥ እየ',
+    ESTIMATION3_OPTION3: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ርግጸኛ ኣይኮንኩን።',
+    ESTIMATION3_OPTION4: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብዓቢኡ እፈልጥ እየ',
+    ESTIMATION3_OPTION5: 'ስራሕ ናይ ምርካብ ዕድለይ ንምምሕያሽ እንታይ ክገብር ከም ዘለኒ ብልክዕ እፈልጥ እየ',
+    ESTIMATION4_TITLE: 'ናይ ምትሕብባር ክእለት።',
+    ESTIMATION4_SUBTITLE: 'ምስ ካልኦት ኣብ ምስራሕ ክሳብ ክንደይ ንፉዕ ኢኻ?',
+    ESTIMATION4_OPTION1: 'ምስ ካልኦት ምትሕብባር ኣዝዩ ይኸብደኒ።',
+    ESTIMATION4_OPTION2: 'መብዛሕትኡ ግዜ ምስ ካልኦት ምትሕብባር ይኸብደኒ እዩ።',
+    ESTIMATION4_OPTION3: 'ይፈላለ እዩ። ሓደ ሓደ ግዜ ቀሊል ሓደ ሓደ ግዜ ድማ ምስ ካልኦት ምትሕብባር ከቢድ እዩ።',
+    ESTIMATION4_OPTION4: 'መብዛሕትኡ ግዜ ምስ ካልኦት ምትሕብባር ቀሊል ኮይኑ ይስምዓኒ።',
+    ESTIMATION4_OPTION5: 'ምስ ካልኦት ምትሕብባር ኣዝዩ ቀሊል ኮይኑ ይረኽቦ',
+    ESTIMATION5_TITLE: 'ምሕደራ መዓልታዊ ህይወት',
+    ESTIMATION5_SUBTITLE: 'ኣብ መዓልታዊ ህይወትካ ስራሕ/ኢንተርንሺፕ ወይ ትምህርቲ ኣብ ምርካብ ከተተኩር ግዜ ኣለካ ድዩ?',
+    ESTIMATION5_OPTION1: 'ዳርጋ ኣብኡ ከተኩር ዝኽእለሉ ኩነታት ፈጺሙ የብለይን።',
+    ESTIMATION5_OPTION2: 'መብዛሕትኡ ግዜ ኣብኡ ከድህብ ዝኽእል ኩነታት የብለይን።',
+    ESTIMATION5_OPTION3: 'ይፈላለ እዩ። ሓደ ሓደ ግዜ ኩነታት ኣለኒ ሓደ ሓደ ግዜ ድማ የብለይን።',
+    ESTIMATION5_OPTION4: 'መብዛሕትኡ ግዜ ኣብኡ ከተኩር ዝኽእለሉ ኩነታት ኣለኒ።',
+    ESTIMATION5_OPTION5: 'ብርግጽ ኣብኡ ከተኩር ዝኽእለሉ ኩነታት ኣለኒ።',
+    ESTIMATION6_TITLE: 'ኩነታት ጥዕና',
+    ESTIMATION6_SUBTITLE: 'ሓፈሻዊ ኩነታት ጥዕናኻ ምስ ስራሕ ወይ ትምህርቲ ብዝተኣሳሰር ብኸመይ ትግምግሞ?',
+    ESTIMATION6_OPTION1: 'ኩነታት ጥዕናይ ምሉእ ብምሉእ ካብ ስራሕ ወይ ትምህርቲ ይኽልክለኒ።',
+    ESTIMATION6_OPTION2: 'ኩነታት ጥዕናይ ኣብ ናይ ምስራሕ ወይ መጽናዕቲ ዓቕመይ ዓቢ ድሩትነት ይገብር',
+    ESTIMATION6_OPTION3: 'ይፈላለ እዩ። ሓደ ሓደ ግዜ ኩነታት ጥዕናይ ደረት ይገብረለይ፡ ሓንሳብ ድማ ኣይገብሮን።',
+    ESTIMATION6_OPTION4: 'መብዛሕትኡ ግዜ ኩነታት ጥዕናይ ካብ ስራሕ ወይ ትምህርቲ ኣይዓግተኒን እዩ።',
+    ESTIMATION6_OPTION5: 'ኩነታት ጥዕናይ ካብ ስራሕ ወይ ትምህርቲ ኣይዓግተኒን።',
+    QUESTION1: 'ብመወዓውዒታት ኣብ ጋዜጣታት፡ መጽሔታትን ካልእ ከምኡ ዝኣመሰለን ኣቢሉ።',
+    QUESTION2: 'ብመንገዲ ኣብ ኢንተርነት ዝርከቡ ናይ ስራሕ ፖርታላት',
+    QUESTION3: 'ብኣስራሕቲ ብናይ ገዛእ ርእስኻ ተበግሶ ምውካስ (ተሌፎን፡ ምብጻሕ፡ ድንገታዊ መመልከቲ)',
+    QUESTION4: 'ስድራይ፡ ፈተውተይን ፈለጥተይን ስራሕ ንምርካብ ክሕግዘኒ ዝኽእል ሰብ እንተፈሊጦም ምሕታት',
+    QUESTION5: 'ብመንገዲ ናይ ሰራሕተኛታት ትካላት፣ ናይ ምልመላ ትካላት',
+    QUESTION6: 'ብማሕበራዊ ሚድያ፣ ፌስቡክ፣ ሊንክድኢን ወዘተ ኣቢሉ።',
+    QUESTION7: 'ንኢንተርንሺፕይ ኣብ ስራሕ ወይ ኢንተርንሺፕ ተገዳስነት ከም ዘለኒ ኣስተውዕል',
+    QUESTION8: 'ስራሕ ኣይኮንኩን ዝደሊ ዘለኹ (ምኽንያቱ ስለ ዝሓመምኩ ወይ ብኻልእ ምኽንያት)',
+    QUESTION9: '',
+}
+
 const localize = (stringId) => {
     let strings = null
     switch (currentLanguage.value) {
@@ -387,161 +443,164 @@ const localize = (stringId) => {
         case 'so':
             strings = stringsSO;
             break;
+        case 'ti':
+            strings = stringsTI;
+            break;
     }
     return strings[stringId];
 }
         
 app.provide('localize', localize)
 
-app.provide('estimatesSWE', [
-    {
-        title: 'Individens tro på att få ett arbete',
-        subtitle: 'Tror du att du kan klara av att arbeta?',
-        propertyName: 'beliefInWork',
-        options: [
-            {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta'},
-            {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta'},
-            {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta'},
-            {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta'},
-            {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta'},
-        ]
-    },
-    {
-        title: 'Kunskap om arbetsmarknaden',
-        subtitle: 'Tror du att dina kompetenser är till nytta på en arbetsplats?',
-        propertyName: 'laborMarket',
-        options: [
-            {value: 1, description: 'Jag tror inte att jag har någon kunskap att erbjuda en arbetsplats'},
-            {value: 2, description: 'Jag tvivlar starkt på att jag har någon kunskap att erbjuda en arbetsplats'},
-            {value: 3, description: 'Det varierar. Ibland blir jag osäker på om jag har något att erbjuda eller inte'},
-            {value: 4, description: 'Jag är för det mesta säker på att jag har något att erbjuda en arbetsplats'},
-            {value: 5, description: 'Jag är säker på att jag har massor att erbjuda en arbetsplats'},
-        ]    
-    },
-    {
-        title: 'Målmedvetenhet',
-        subtitle: 'Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?',
-        propertyName: 'purposeFulness',
-        options: [
-            {value: 1, description: 'Jag vet inte hur jag ska göra för att nå ett arbete'},
-            {value: 2, description: 'Jag vet till viss del vad jag ska för att förbättra mina möljigheter att nå ett arbete'},
-            {value: 3, description: 'Jag vet ganska väl vad jag ska göra för att förbättra mina möjligheter att nå ett arbete'},
-            {value: 4, description: 'Jag vet till stor del vad jag ska göra för att förbättra mina möjligheter att nå ett arbete'},
-            {value: 5, description: 'Jag vet precis vad jag ska göra för att nå ett arbete'},
-        ]    
-    },
-    {
-        title: 'Samarbetsförmåga',
-        subtitle: 'Hur bra är du på att arbeta med andra?',
-        propertyName: 'abilityToWorkTogether',
-        options: [
-            {value: 1, description: 'Jag tycker det är väldigt svårt att samarbeta med andra'},
-            {value: 2, description: 'Jag har ofta svårt att samarbeta med andra'},
-            {value: 3, description: 'Det varierar. Ibland är det lätt och ibland är det svårt att samarbeta med andra'},
-            {value: 4, description: 'Jag tycker oftast att det är lätt att samarbeta med andra'},
-            {value: 5, description: 'Jag tycker att det är väldigt lätt att samarbeta med andra'},
-        ]    
-    },
-    {
-        title: 'Hanteringen av vardagen',
-        subtitle: 'Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?',
-        propertyName: 'handlingOfEverydayLife',
-        options: [
-            {value: 1, description: 'Jag har nästan aldrig tid att fokusera på det'},
-            {value: 2, description: 'Jag har oftast inte tid att fokusera på det'},
-            {value: 3, description: 'Det varierar. Ibland har jag tid och ibland har jag inte tid'},
-            {value: 4, description: 'Jag har mestadels tid att fokusera på det'},
-            {value: 5, description: 'Jag har definitivt tid att fokusera på det'},
-        ]    
-    },
-    {
-        title: 'Hälsotillstånd',
-        subtitle: 'Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?',
-        propertyName: 'stateOfHealth',
-        options: [
-            {value: 1, description: 'Mitt hälsotillstånd hindrar mig helt från att arbeta eller studera'},
-            {value: 2, description: 'Mitt hälsotillstånd sätter enorma begränsningar för att jag ska kunna arbeta eller studera. Jag kanske kan arbeta max ett par timmar'},
-            {value: 3, description: 'Det varierar. Ibland är det svårt. Jag kanske kan ta ett deltidsarbete med rätt typ av hjälp och stöd'},
-            {value: 4, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta, men kan ibland sätta begränsningar'},
-            {value: 5, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta'},
-        ]    
-    },
-])
+// app.provide('estimatesSWE', [
+//     {
+//         title: 'Individens tro på att få ett arbete',
+//         subtitle: 'Tror du att du kan klara av att arbeta?',
+//         propertyName: 'beliefInWork',
+//         options: [
+//             {value: 1, description: 'Jag tror inte att jag kan klara av att arbeta'},
+//             {value: 2, description: 'Jag är väldigt osäker på om jag kan klara av att arbeta'},
+//             {value: 3, description: 'Jag är osäker på om jag kan klara av att arbeta'},
+//             {value: 4, description: 'Jag är någorlunda säker på att jag kan klara av att arbeta'},
+//             {value: 5, description: 'Jag är helt säker på att jag kan klara av att arbeta'},
+//         ]
+//     },
+//     {
+//         title: 'Kunskap om arbetsmarknaden',
+//         subtitle: 'Tror du att dina kompetenser är till nytta på en arbetsplats?',
+//         propertyName: 'laborMarket',
+//         options: [
+//             {value: 1, description: 'Jag tror inte att jag har någon kunskap att erbjuda en arbetsplats'},
+//             {value: 2, description: 'Jag tvivlar starkt på att jag har någon kunskap att erbjuda en arbetsplats'},
+//             {value: 3, description: 'Det varierar. Ibland blir jag osäker på om jag har något att erbjuda eller inte'},
+//             {value: 4, description: 'Jag är för det mesta säker på att jag har något att erbjuda en arbetsplats'},
+//             {value: 5, description: 'Jag är säker på att jag har massor att erbjuda en arbetsplats'},
+//         ]    
+//     },
+//     {
+//         title: 'Målmedvetenhet',
+//         subtitle: 'Vet du vad du ska göra för att förbättra dina möjligheter att nå ett arbete?',
+//         propertyName: 'purposeFulness',
+//         options: [
+//             {value: 1, description: 'Jag vet inte hur jag ska göra för att nå ett arbete'},
+//             {value: 2, description: 'Jag vet till viss del vad jag ska för att förbättra mina möljigheter att nå ett arbete'},
+//             {value: 3, description: 'Jag vet ganska väl vad jag ska göra för att förbättra mina möjligheter att nå ett arbete'},
+//             {value: 4, description: 'Jag vet till stor del vad jag ska göra för att förbättra mina möjligheter att nå ett arbete'},
+//             {value: 5, description: 'Jag vet precis vad jag ska göra för att nå ett arbete'},
+//         ]    
+//     },
+//     {
+//         title: 'Samarbetsförmåga',
+//         subtitle: 'Hur bra är du på att arbeta med andra?',
+//         propertyName: 'abilityToWorkTogether',
+//         options: [
+//             {value: 1, description: 'Jag tycker det är väldigt svårt att samarbeta med andra'},
+//             {value: 2, description: 'Jag har ofta svårt att samarbeta med andra'},
+//             {value: 3, description: 'Det varierar. Ibland är det lätt och ibland är det svårt att samarbeta med andra'},
+//             {value: 4, description: 'Jag tycker oftast att det är lätt att samarbeta med andra'},
+//             {value: 5, description: 'Jag tycker att det är väldigt lätt att samarbeta med andra'},
+//         ]    
+//     },
+//     {
+//         title: 'Hanteringen av vardagen',
+//         subtitle: 'Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?',
+//         propertyName: 'handlingOfEverydayLife',
+//         options: [
+//             {value: 1, description: 'Jag har nästan aldrig tid att fokusera på det'},
+//             {value: 2, description: 'Jag har oftast inte tid att fokusera på det'},
+//             {value: 3, description: 'Det varierar. Ibland har jag tid och ibland har jag inte tid'},
+//             {value: 4, description: 'Jag har mestadels tid att fokusera på det'},
+//             {value: 5, description: 'Jag har definitivt tid att fokusera på det'},
+//         ]    
+//     },
+//     {
+//         title: 'Hälsotillstånd',
+//         subtitle: 'Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?',
+//         propertyName: 'stateOfHealth',
+//         options: [
+//             {value: 1, description: 'Mitt hälsotillstånd hindrar mig helt från att arbeta eller studera'},
+//             {value: 2, description: 'Mitt hälsotillstånd sätter enorma begränsningar för att jag ska kunna arbeta eller studera. Jag kanske kan arbeta max ett par timmar'},
+//             {value: 3, description: 'Det varierar. Ibland är det svårt. Jag kanske kan ta ett deltidsarbete med rätt typ av hjälp och stöd'},
+//             {value: 4, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta, men kan ibland sätta begränsningar'},
+//             {value: 5, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta'},
+//         ]    
+//     },
+// ])
 
-app.provide('estimatesGBR', [
-    {
-        title: 'The individuals belief in getting a job',
-        subtitle: 'Do you think that you can manage to work?',
-        propertyName: 'beliefInWork',
-        options: [
-            {value: 1, description: 'I do not think I can work'},
-            {value: 2, description: 'I am very unsure if I can manage to work'},
-            {value: 3, description: 'I am not sure if I can work'},
-            {value: 4, description: 'I am reasonably sure I can work'},
-            {value: 5, description: 'I am pretty sure I can work'},
-        ]
-    },
-    {
-        title: 'Knowledge of the labor market',
-        subtitle: 'Do you think that your skills are useful in a workplace?',
-        propertyName: 'laborMarket',
-        options: [
-            {value: 1, description: 'I do not think I have any knowledge to offer a workplace'},
-            {value: 2, description: 'I strongly doubt that I have any knowledge to offer a workplace'},
-            {value: 3, description: 'It varies. Sometimes I get unsure if I have something to offer or not'},
-            {value: 4, description: 'I am mostly sure I have something to offer a workplace'},
-            {value: 5, description: 'I am sure I have a lot to offer to a workplace'},
-        ]    
-    },
-    {
-        title: 'Purposefulness',
-        subtitle: 'Do you know what to do to improve your chances of getting a job?',
-        propertyName: 'purposeFulness',
-        options: [
-            {value: 1, description: 'I do not know what to do to get a job'},
-            {value: 2, description: 'I know to some extent what I need to do to improve my chances of getting a job'},
-            {value: 3, description: 'I know pretty well what to do to improve my chances of getting a job'},
-            {value: 4, description: 'I largely know what to do to improve my chances of getting a job'},
-            {value: 5, description: 'I know exactly what I need to do to get a job'},
-        ]    
-    },
-    {
-        title: 'Ability to cooperate',
-        subtitle: 'How good are you at working with others?',
-        propertyName: 'abilityToWorkTogether',
-        options: [
-            {value: 1, description: 'I find it very difficult to collaborate with others'},
-            {value: 2, description: 'I often find it difficult to collaborate with others'},
-            {value: 3, description: 'It varies. Sometimes its easy and sometimes its hard to work with others'},
-            {value: 4, description: 'I usually find it easy to collaborate with others'},
-            {value: 5, description: 'I find it very easy to collaborate with others'},
-        ]    
-    },
-    {
-        title: 'Hanteringen av vardagen',
-        subtitle: 'Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?',
-        propertyName: 'handlingOfEverydayLife',
-        options: [
-            {value: 1, description: 'Jag har nästan aldrig tid att fokusera på det'},
-            {value: 2, description: 'Jag har oftast inte tid att fokusera på det'},
-            {value: 3, description: 'Det varierar. Ibland har jag tid och ibland har jag inte tid'},
-            {value: 4, description: 'Jag har mestadels tid att fokusera på det'},
-            {value: 5, description: 'Jag har definitivt tid att fokusera på det'},
-        ]    
-    },
-    {
-        title: 'Hälsotillstånd',
-        subtitle: 'Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?',
-        propertyName: 'stateOfHealth',
-        options: [
-            {value: 1, description: 'Mitt hälsotillstånd hindrar mig helt från att arbeta eller studera'},
-            {value: 2, description: 'Mitt hälsotillstånd sätter enorma begränsningar för att jag ska kunna arbeta eller studera. Jag kanske kan arbeta max ett par timmar'},
-            {value: 3, description: 'Det varierar. Ibland är det svårt. Jag kanske kan ta ett deltidsarbete med rätt typ av hjälp och stöd'},
-            {value: 4, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta, men kan ibland sätta begränsningar'},
-            {value: 5, description: 'Mitt hälsotillstånd hindar mig inte från att arbeta'},
-        ]    
-    },
-])
+// app.provide('estimatesGBR', [
+//     {
+//         title: 'The individuals belief in getting a job',
+//         subtitle: 'Do you think that you can manage to work?',
+//         propertyName: 'beliefInWork',
+//         options: [
+//             {value: 1, description: 'I do not think I can work'},
+//             {value: 2, description: 'I am very unsure if I can manage to work'},
+//             {value: 3, description: 'I am not sure if I can work'},
+//             {value: 4, description: 'I am reasonably sure I can work'},
+//             {value: 5, description: 'I am pretty sure I can work'},
+//         ]
+//     },
+//     {
+//         title: 'Knowledge of the labor market',
+//         subtitle: 'Do you think that your skills are useful in a workplace?',
+//         propertyName: 'laborMarket',
+//         options: [
+//             {value: 1, description: 'I do not think I have any knowledge to offer a workplace'},
+//             {value: 2, description: 'I strongly doubt that I have any knowledge to offer a workplace'},
+//             {value: 3, description: 'It varies. Sometimes I get unsure if I have something to offer or not'},
+//             {value: 4, description: 'I am mostly sure I have something to offer a workplace'},
+//             {value: 5, description: 'I am sure I have a lot to offer to a workplace'},
+//         ]    
+//     },
+//     {
+//         title: 'Purposefulness',
+//         subtitle: 'Do you know what to do to improve your chances of getting a job?',
+//         propertyName: 'purposeFulness',
+//         options: [
+//             {value: 1, description: 'I do not know what to do to get a job'},
+//             {value: 2, description: 'I know to some extent what I need to do to improve my chances of getting a job'},
+//             {value: 3, description: 'I know pretty well what to do to improve my chances of getting a job'},
+//             {value: 4, description: 'I largely know what to do to improve my chances of getting a job'},
+//             {value: 5, description: 'I know exactly what I need to do to get a job'},
+//         ]    
+//     },
+//     {
+//         title: 'Ability to cooperate',
+//         subtitle: 'How good are you at working with others?',
+//         propertyName: 'abilityToWorkTogether',
+//         options: [
+//             {value: 1, description: 'I find it very difficult to collaborate with others'},
+//             {value: 2, description: 'I often find it difficult to collaborate with others'},
+//             {value: 3, description: 'It varies. Sometimes its easy and sometimes its hard to work with others'},
+//             {value: 4, description: 'I usually find it easy to collaborate with others'},
+//             {value: 5, description: 'I find it very easy to collaborate with others'},
+//         ]    
+//     },
+//     {
+//         title: 'Hanteringen av vardagen',
+//         subtitle: 'Har du tid i vardagen att fokusera på att få ett arbete/praktik eller utbildning?',
+//         propertyName: 'handlingOfEverydayLife',
+//         options: [
+//             {value: 1, description: 'Jag har nästan aldrig tid att fokusera på det'},
+//             {value: 2, description: 'Jag har oftast inte tid att fokusera på det'},
+//             {value: 3, description: 'Det varierar. Ibland har jag tid och ibland har jag inte tid'},
+//             {value: 4, description: 'Jag har mestadels tid att fokusera på det'},
+//             {value: 5, description: 'Jag har definitivt tid att fokusera på det'},
+//         ]    
+//     },
+//     {
+//         title: 'Hälsotillstånd',
+//         subtitle: 'Hur bedömer du att ditt allmänna hälsotillstånd är i förhållande till att arbeta?',
+//         propertyName: 'stateOfHealth',
+//         options: [
+//             {value: 1, description: 'Mitt hälsotillstånd hindrar mig helt från att arbeta eller studera'},
+//             {value: 2, description: 'Mitt hälsotillstånd sätter enorma begränsningar för att jag ska kunna arbeta eller studera. Jag kanske kan arbeta max ett par timmar'},
+//             {value: 3, description: 'Det varierar. Ibland är det svårt. Jag kanske kan ta ett deltidsarbete med rätt typ av hjälp och stöd'},
+//             {value: 4, description: 'Mitt hälsotillstånd hindrar mig inte från att arbeta, men kan ibland sätta begränsningar'},
+//             {value: 5, description: 'Mitt hälsotillstånd hindar mig inte från att arbeta'},
+//         ]    
+//     },
+// ])
 
 let myGlobalVariable = ref('smiley')
 app.provide('myGlobalVariable', myGlobalVariable)
